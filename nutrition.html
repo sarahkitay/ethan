@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition | Ethan Cope</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#0a0a0a',
+                        charcoal: '#141414',
+                        gunmetal: '#1a1a1a',
+                        steel: '#2a2a2a',
+                        rust: '#83B1F3',
+                        amber: '#9bc2f5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body class="bg-void text-bone">
+
+    <div class="noise"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 bg-void/80 border-b border-steel backdrop-blur-sm">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <a href="index.html" class="mono-text text-sm tracking-widest text-white font-bold">ETHAN COPE</a>
+            <div class="hidden md:flex gap-8 mono-text text-xs tracking-widest text-gray-400">
+                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors">RESULTS</a>
+                <a href="nutrition.html" class="text-rust">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
+            </div>
+            <button class="md:hidden text-white p-2 -mr-2" id="mobile-menu-btn" aria-label="Open menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        <div id="mobile-nav-panel" class="hidden md:hidden absolute top-full left-0 right-0 bg-void border-b border-steel py-4 px-6">
+            <div class="flex flex-col gap-3 mono-text text-xs tracking-widest text-gray-400 max-w-7xl mx-auto">
+                <a href="programs.html" class="hover:text-rust transition-colors py-1">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors py-1">RESULTS</a>
+                <a href="nutrition.html" class="text-rust py-1">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors py-1">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors py-1">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors py-1">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors py-1">ADMIN</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 min-h-screen pt-32 pb-24">
+        <section class="px-6 md:px-12 lg:px-24">
+            <div class="max-w-2xl mx-auto">
+                <div class="section-marker">NUTRITION</div>
+                <h1 class="display-text text-4xl md:text-6xl text-white mb-2">INTAKE CALCULATOR</h1>
+                <p class="subheader-thin mono-text text-sm text-gray-500 mb-10 max-w-lg">Based on Mifflin-St Jeor (BMR) and activity level. Height in feet: we'll convert to inches for you.</p>
+
+                <form id="nutrition-form" class="space-y-6 mb-12">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">HEIGHT (FT)</label>
+                            <input type="number" id="height-ft" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="5" min="4" max="8" step="1">
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">HEIGHT (IN)</label>
+                            <input type="number" id="height-in" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="10" min="0" max="11" step="1">
+                        </div>
+                    </div>
+                    <p id="height-total-in" class="mono-text text-xs text-gray-500 -mt-2">Total: - in</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">WEIGHT (LBS)</label>
+                            <input type="number" id="weight-lbs" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="180" min="80" max="500" step="1">
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">AGE</label>
+                            <input type="number" id="age" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="30" min="15" max="100">
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">SEX</label>
+                            <select id="sex" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full">
+                                <option value="m" class="bg-charcoal">MALE</option>
+                                <option value="f" class="bg-charcoal">FEMALE</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">ACTIVITY LEVEL</label>
+                            <select id="activity" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full">
+                                <option value="1.2" class="bg-charcoal">SEDENTARY (LITTLE / NO EXERCISE)</option>
+                                <option value="1.375" class="bg-charcoal">LIGHT (1–3 DAYS / WEEK)</option>
+                                <option value="1.55" class="bg-charcoal">MODERATE (3–5 DAYS / WEEK)</option>
+                                <option value="1.725" class="bg-charcoal">VERY ACTIVE (6–7 DAYS / WEEK)</option>
+                                <option value="1.9" class="bg-charcoal">EXTRA ACTIVE (2X / DAY OR PHYSICAL JOB)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="magnetic-btn" data-magnetic><span>CALCULATE</span></button>
+                </form>
+
+                <div id="nutrition-results" class="hidden border-t border-steel pt-10 pb-10 space-y-8">
+                    <p class="text-gray-500 text-sm mono-text mb-6">Protein: 1.6–2.2 g/kg for muscle and recovery. Use the targets below by goal.</p>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-charcoal border border-steel p-5">
+                            <p class="mono-text text-xs tracking-widest text-rust mb-3">MAINTENANCE</p>
+                            <div class="space-y-2 mb-2">
+                                <p class="text-gray-500 text-xs">Calories</p>
+                                <p id="calories-maintenance" class="display-text text-xl text-white">-</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-gray-500 text-xs">Protein (g/day)</p>
+                                <p id="protein-maintenance" class="display-text text-xl text-white">-</p>
+                            </div>
+                        </div>
+                        <div class="bg-charcoal border border-steel p-5">
+                            <p class="mono-text text-xs tracking-widest text-rust mb-3">WEIGHT LOSS</p>
+                            <div class="space-y-2 mb-2">
+                                <p class="text-gray-500 text-xs">Calories (deficit)</p>
+                                <p id="calories-loss" class="display-text text-xl text-white">-</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-gray-500 text-xs">Protein (g/day)</p>
+                                <p id="protein-loss" class="display-text text-xl text-white">-</p>
+                            </div>
+                        </div>
+                        <div class="bg-charcoal border border-steel p-5">
+                            <p class="mono-text text-xs tracking-widest text-rust mb-3">WEIGHT GAIN</p>
+                            <div class="space-y-2 mb-2">
+                                <p class="text-gray-500 text-xs">Calories (surplus)</p>
+                                <p id="calories-gain" class="display-text text-xl text-white">-</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-gray-500 text-xs">Protein (g/day)</p>
+                                <p id="protein-gain" class="display-text text-xl text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-500 text-xs mono-text">Maintenance = TDEE. Weight loss: ~500 cal below TDEE. Weight gain: ~300 cal above TDEE. Protein range kept for all goals.</p>
+                </div>
+
+                <div class="border-t border-steel pt-10">
+                    <button type="button" id="meal-plan-cta-btn" class="magnetic-btn w-full md:w-auto" data-magnetic><span>APPLY FOR A CUSTOM MEAL PLAN NOW</span></button>
+                    <div id="meal-plan-form-wrap" class="hidden mt-6">
+                        <form id="meal-plan-form" class="space-y-6">
+                            <input type="hidden" id="meal-plan-age" name="age">
+                            <input type="hidden" id="meal-plan-height-in" name="heightIn">
+                            <input type="hidden" id="meal-plan-weight" name="weight">
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">NAME</label>
+                                <input type="text" id="meal-plan-name" name="name" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full" placeholder="Your name" required>
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">EMAIL</label>
+                                <input type="email" id="meal-plan-email" name="email" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full" placeholder="you@example.com" required>
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">GOALS</label>
+                                <input type="text" id="meal-plan-goals" name="goals" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full" placeholder="e.g. fat loss, muscle gain, performance">
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">EXERCISE HISTORY</label>
+                                <textarea id="meal-plan-exercise-history" name="exerciseHistory" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full resize-none" rows="3" placeholder="Current training, experience, injuries..."></textarea>
+                            </div>
+                            <button type="submit" class="magnetic-btn" data-magnetic><span>SUBMIT APPLICATION</span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-charcoal border-t border-steel py-8 px-6 text-center mono-text text-xs text-gray-600 tracking-widest">
+        <a href="index.html" class="hover:text-rust transition-colors">ETHAN COPE</a> · <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
+    </footer>
+
+    <script src="js/shared.js"></script>
+    <script src="js/nutrition.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | Ethan Cope</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#0a0a0a',
+                        charcoal: '#141414',
+                        gunmetal: '#1a1a1a',
+                        steel: '#2a2a2a',
+                        rust: '#83B1F3',
+                        amber: '#9bc2f5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body class="bg-void text-bone" data-page="results">
+
+    <div class="noise"></div>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 bg-void/80 border-b border-steel backdrop-blur-sm">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <a href="index.html" class="mono-text text-sm tracking-widest text-white font-bold">ETHAN COPE</a>
+            <div class="hidden md:flex gap-8 mono-text text-xs tracking-widest text-gray-400">
+                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="results.html" class="text-rust">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
+            </div>
+            <button class="md:hidden text-white p-2 -mr-2" id="mobile-menu-btn" aria-label="Open menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        <div id="mobile-nav-panel" class="hidden md:hidden absolute top-full left-0 right-0 bg-void border-b border-steel py-4 px-6">
+            <div class="flex flex-col gap-3 mono-text text-xs tracking-widest text-gray-400 max-w-7xl mx-auto">
+                <a href="programs.html" class="hover:text-rust transition-colors py-1">PROGRAMS</a>
+                <a href="results.html" class="text-rust py-1">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors py-1">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors py-1">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors py-1">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors py-1">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors py-1">ADMIN</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 min-h-screen">
+        <header class="page-header px-6 md:px-12 lg:px-24">
+            <div class="max-w-6xl mx-auto">
+                <div class="section-marker">RESULTS</div>
+                <h1 class="display-text text-4xl md:text-6xl text-white mb-4">
+                    CLIENT WINS
+                </h1>
+                <p class="mono-text text-sm text-gray-500 max-w-xl">
+                    Real outcomes, short reads. Tap a card to scan; photos and video stories coming soon.
+                </p>
+            </div>
+        </header>
+
+        <section class="px-6 md:px-12 lg:px-24 pb-24">
+            <div class="max-w-6xl mx-auto">
+                <div class="video-testimonial-stage">
+                    <video id="testimonial-video-bg" class="video-testimonial-bg" src="assets/ethanvid3_1.mp4" autoplay muted loop playsinline></video>
+                    <div class="video-testimonial-overlay"></div>
+
+                    <div class="video-testimonial-card-wrap">
+                        <article class="video-testimonial-card is-active" data-testimonial-slide>
+                            <p class="video-testimonial-result" data-testimonial-field="result">−12% body fat</p>
+                            <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-4" data-testimonial-field="quote">"Stronger than I’ve been in years. Ethan’s form coaching made every session feel safe and effective."</p>
+                            <p class="mono-text text-xs text-gray-400" data-testimonial-field="author">— Sarah M. · 16 weeks</p>
+                        </article>
+                        <article class="video-testimonial-card" data-testimonial-slide>
+                            <p class="video-testimonial-result" data-testimonial-field="result">Energy and strength up</p>
+                            <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-4" data-testimonial-field="quote">"I didn’t think I’d feel this fit again. More strength, better sleep, and training that fits real life."</p>
+                            <p class="mono-text text-xs text-gray-400" data-testimonial-field="author">— Client · busy professional</p>
+                        </article>
+                        <article class="video-testimonial-card" data-testimonial-slide>
+                            <p class="video-testimonial-result" data-testimonial-field="result">Pain to momentum</p>
+                            <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-4" data-testimonial-field="quote">"Issues I thought were permanent got better. He adapts every session, never a stale template."</p>
+                            <p class="mono-text text-xs text-gray-400" data-testimonial-field="author">— Client · 5 months</p>
+                        </article>
+                        <article class="video-testimonial-card" data-testimonial-slide>
+                            <p class="video-testimonial-result" data-testimonial-field="result">+Strength and mobility</p>
+                            <p class="text-gray-200 text-sm md:text-base leading-relaxed mb-4" data-testimonial-field="quote">"Huge gains in six months. Nutrition guidance elevated my energy, and he’s patient with all my questions."</p>
+                            <p class="mono-text text-xs text-gray-400" data-testimonial-field="author">— Client · 6 months</p>
+                        </article>
+                    </div>
+
+                    <div class="video-testimonial-controls">
+                        <button type="button" id="testimonial-prev" class="video-testimonial-btn" aria-label="Previous testimonial">Prev</button>
+                        <button type="button" id="testimonial-toggle" class="video-testimonial-btn" aria-label="Pause autoplay">Pause</button>
+                        <button type="button" id="testimonial-next" class="video-testimonial-btn" aria-label="Next testimonial">Next</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-charcoal border-t border-steel py-8 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <a href="index.html" class="display-text text-2xl text-white">ETHAN COPE</a>
+            <div class="flex gap-6 md:gap-8 mono-text text-xs tracking-widest text-gray-500 flex-wrap justify-center">
+                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-steel text-center mono-text text-xs text-gray-600 tracking-widest">
+            © 2024 ETHAN COPE. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+
+    <script src="js/shared.js"></script>
+    <script src="js/cms-defaults.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/cms-runtime.js"></script>
+    <script src="js/results.js"></script>
+</body>
+</html>

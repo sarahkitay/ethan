@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Ethan Cope</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#0a0a0a',
+                        charcoal: '#141414',
+                        gunmetal: '#1a1a1a',
+                        steel: '#2a2a2a',
+                        rust: '#83B1F3',
+                        amber: '#9bc2f5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body class="bg-void text-bone">
+
+    <div class="noise"></div>
+
+    <!-- Admin Login -->
+    <section id="admin-login-screen" class="min-h-screen flex items-center justify-center px-6 py-16 relative z-10">
+        <div class="w-full max-w-md">
+            <div class="section-marker text-center mb-6">ADMIN PORTAL</div>
+            <h1 class="display-text text-4xl text-white text-center mb-2">ADMIN SIGN IN</h1>
+            <p class="mono-text text-sm text-gray-500 text-center mb-8">Coach access only.</p>
+            <form id="admin-login-form" class="space-y-6">
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">EMAIL</label>
+                    <input type="email" id="admin-email" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="admin@ethancope.com" required>
+                </div>
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">PASSWORD</label>
+                    <input type="password" id="admin-password" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="••••••••" required>
+                </div>
+                <p id="admin-login-error" class="text-rust text-sm hidden">Invalid credentials.</p>
+                <button type="submit" class="w-full py-4 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors">
+                    SIGN IN
+                </button>
+            </form>
+            <p class="mono-text text-xs text-gray-600 text-center mt-6">Demo: admin@ethancope.com / admin123</p>
+            <p class="mono-text text-xs text-center mt-4"><a href="index.html" class="text-gray-500 hover:text-rust transition-colors">← Back to website</a></p>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <main id="admin-dashboard" class="relative z-10 hidden min-h-screen pb-24">
+        <div class="page-header px-6 md:px-12 lg:px-24 pt-16">
+            <div class="max-w-7xl mx-auto flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <div class="section-marker">ADMIN</div>
+                    <h1 class="display-text text-4xl md:text-5xl text-white mb-2">
+                        DASHBOARD
+                    </h1>
+                    <p class="mono-text text-sm text-gray-500">Manage clients, programs, and view session activity.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="mono-text text-xs tracking-widest text-gray-500 hover:text-rust transition-colors">Back to website</a>
+                    <button type="button" id="admin-logout" class="mono-text text-xs tracking-widest text-gray-500 hover:text-rust transition-colors">LOG OUT</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-6 md:px-12 lg:px-24 mt-12 max-w-7xl mx-auto space-y-16">
+            <!-- Tabs -->
+            <div class="flex gap-6 border-b border-steel flex-wrap pt-8">
+                <button type="button" data-tab="schedule" class="admin-tab active mono-text text-xs tracking-widest pb-4 border-b-2 border-transparent -mb-px transition-colors text-rust border-rust">SCHEDULE</button>
+                <button type="button" data-tab="forms" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">INTAKE FORMS</button>
+                <button type="button" data-tab="meal-plan-forms" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">MEAL PLAN APPLICATIONS</button>
+                <button type="button" data-tab="program-requests" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">PROGRAM REQUESTS</button>
+                <button type="button" data-tab="clients" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">CLIENTS</button>
+                <button type="button" data-tab="programs" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">PROGRAMS</button>
+                <button type="button" data-tab="workouts" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">WORKOUTS</button>
+                <button type="button" data-tab="sessions" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">SESSIONS</button>
+                <button type="button" data-tab="site-cms" class="admin-tab mono-text text-xs tracking-widest text-gray-500 hover:text-white pb-4 border-b-2 border-transparent -mb-px transition-colors">SITE CMS</button>
+            </div>
+
+            <!-- Schedule tab: appointments above calendar -->
+            <section id="tab-schedule" class="admin-tab-panel">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">APPOINTMENTS & CALENDAR</h2>
+                <h3 class="mono-text text-xs tracking-widest text-rust mb-3">ALL APPOINTMENTS: REQUESTED (approve/deny), APPROVED, DENIED</h3>
+                <div class="bg-charcoal border border-steel overflow-hidden mb-12">
+                    <table class="table-dark w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">DATE</th>
+                                <th class="text-left">TIME</th>
+                                <th class="text-left">CLIENT</th>
+                                <th class="text-left">TYPE</th>
+                                <th class="text-left">STATUS</th>
+                                <th class="text-left">ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-appointments-tbody"></tbody>
+                    </table>
+                    <p id="admin-no-appointments" class="mono-text text-gray-500 text-sm p-6 hidden">No appointments.</p>
+                </div>
+                <section class="mt-12">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="mono-text text-xs tracking-widest text-rust">SCHEDULE</h3>
+                        <div class="flex gap-2">
+                            <button type="button" id="admin-cal-prev" class="p-2 text-gray-500 hover:text-white transition-colors" aria-label="Prev month">‹</button>
+                            <span id="admin-cal-month-year" class="mono-text text-sm text-white"></span>
+                            <button type="button" id="admin-cal-next" class="p-2 text-gray-500 hover:text-white transition-colors" aria-label="Next month">›</button>
+                        </div>
+                    </div>
+                    <div class="bg-charcoal border border-steel p-4">
+                        <div class="grid grid-cols-7 gap-1 mb-2">
+                            <span class="mono-text text-xs text-gray-500 text-center">SUN</span><span class="mono-text text-xs text-gray-500 text-center">MON</span><span class="mono-text text-xs text-gray-500 text-center">TUE</span><span class="mono-text text-xs text-gray-500 text-center">WED</span><span class="mono-text text-xs text-gray-500 text-center">THU</span><span class="mono-text text-xs text-gray-500 text-center">FRI</span><span class="mono-text text-xs text-gray-500 text-center">SAT</span>
+                        </div>
+                        <div id="admin-cal-grid" class="grid grid-cols-7 gap-1"></div>
+                    </div>
+                    <div id="admin-cal-detail" class="mt-4 p-4 border border-steel bg-gunmetal/30 min-h-[72px] rounded-sm">
+                        <p class="mono-text text-xs text-gray-500">Click a date to see appointments and status.</p>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Intake forms tab -->
+            <section id="tab-forms" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">INTAKE FORMS (from contact page)</h2>
+                <div class="bg-charcoal border border-steel overflow-hidden">
+                    <table class="table-dark w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">DATE</th>
+                                <th class="text-left">NAME</th>
+                                <th class="text-left">EMAIL</th>
+                                <th class="text-left">GOAL</th>
+                                <th class="text-left">MESSAGE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-forms-tbody"></tbody>
+                    </table>
+                    <p id="admin-no-forms" class="mono-text text-gray-500 text-sm p-6 hidden">No intake forms yet.</p>
+                </div>
+            </section>
+
+            <!-- Meal plan applications tab -->
+            <section id="tab-meal-plan-forms" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">MEAL PLAN APPLICATIONS (from intake calculator)</h2>
+                <div class="bg-charcoal border border-steel overflow-hidden">
+                    <table class="table-dark w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">DATE</th>
+                                <th class="text-left">NAME</th>
+                                <th class="text-left">EMAIL</th>
+                                <th class="text-left">GOALS</th>
+                                <th class="text-left">AGE</th>
+                                <th class="text-left">HEIGHT (IN)</th>
+                                <th class="text-left">WEIGHT (LBS)</th>
+                                <th class="text-left">EXERCISE HISTORY</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-meal-plan-forms-tbody"></tbody>
+                    </table>
+                    <p id="admin-no-meal-plan-forms" class="mono-text text-gray-500 text-sm p-6 hidden">No meal plan applications yet.</p>
+                </div>
+            </section>
+
+            <!-- Program requests tab -->
+            <section id="tab-program-requests" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">REQUESTED / PURCHASED PROGRAMS</h2>
+                <div class="bg-charcoal border border-steel overflow-hidden">
+                    <table class="table-dark w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">DATE</th>
+                                <th class="text-left">CLIENT</th>
+                                <th class="text-left">EMAIL</th>
+                                <th class="text-left">PROGRAM</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-program-requests-tbody"></tbody>
+                    </table>
+                    <p id="admin-no-program-requests" class="mono-text text-gray-500 text-sm p-6 hidden">No program requests yet.</p>
+                </div>
+                <p class="mono-text text-xs text-gray-500 mt-2">Includes applications from “Apply for access” and program selections from client portal.</p>
+            </section>
+
+            <!-- Clients tab -->
+            <section id="tab-clients" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">ACTIVE CLIENTS</h2>
+                <div class="bg-charcoal border border-steel overflow-hidden">
+                    <table class="table-dark w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">NAME</th>
+                                <th class="text-left">EMAIL</th>
+                                <th class="text-left">PROGRAM</th>
+                                <th class="text-left">START</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-clients-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="mt-10">
+                    <h3 class="mono-text text-xs tracking-widest text-rust mb-3">ADD CLIENT</h3>
+                    <form id="admin-add-client-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="mono-text text-xs text-gray-500 tracking-widest mb-2 block">NAME</label>
+                                <input type="text" id="admin-client-name" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="Alex" required />
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs text-gray-500 tracking-widest mb-2 block">EMAIL</label>
+                                <input type="email" id="admin-client-email" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="client@example.com" required />
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="mono-text text-xs text-gray-500 tracking-widest mb-2 block">PORTAL PASSWORD</label>
+                                <input type="password" id="admin-client-password" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="Min 6 characters" required minlength="6" />
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs text-gray-500 tracking-widest mb-2 block">PROGRAM</label>
+                                <select id="admin-client-program" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" required>
+                                    <option value="">Select program…</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="mono-text text-xs text-gray-500 tracking-widest mb-2 block">START DATE</label>
+                            <input type="date" id="admin-client-start-date" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" required />
+                        </div>
+
+                        <div class="flex items-center gap-4 flex-wrap">
+                            <button type="submit" class="py-2 px-5 bg-rust text-void mono-text text-xs tracking-widest hover:bg-amber transition-colors">
+                                ADD CLIENT
+                            </button>
+                            <span id="admin-add-client-msg" class="hidden mono-text text-xs tracking-widest"></span>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Programs tab -->
+            <section id="tab-programs" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">PROGRAMS</h2>
+                <div class="mb-10">
+                    <h3 class="mono-text text-xs tracking-widest text-gray-500 mb-3">ADD PROGRAM</h3>
+                    <form id="admin-add-program-form" class="flex flex-wrap items-end gap-4">
+                        <div>
+                            <label class="mono-text text-xs text-gray-500 mb-1 block">NAME</label>
+                            <input type="text" id="admin-program-name" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-48" placeholder="e.g. Elite Block 1" required>
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs text-gray-500 mb-1 block">TYPE</label>
+                            <select id="admin-program-type" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-40">
+                                <option value="ELITE">ELITE</option>
+                                <option value="COMPETE">COMPETE</option>
+                                <option value="VIP">VIP</option>
+                                <option value="1ON1">1-ON-1</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs text-gray-500 mb-1 block">DURATION</label>
+                            <input type="text" id="admin-program-duration" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-32" placeholder="e.g. 12 weeks">
+                        </div>
+                        <button type="submit" class="py-2 px-4 bg-rust text-void mono-text text-xs tracking-widest hover:bg-amber transition-colors">ADD</button>
+                    </form>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-12" id="admin-programs-list"></div>
+                </section>
+
+            <!-- Workouts tab: add videos to current workouts, create new workouts with videos -->
+            <section id="tab-workouts" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">WORKOUTS & VIDEOS</h2>
+                <p class="mono-text text-xs text-gray-500 mb-6">Add new workouts or upload videos for existing ones. Pick 3 to show on the public workout library.</p>
+
+                <div class="mb-10">
+                    <h3 class="mono-text text-xs tracking-widest text-rust mb-3">ADD NEW WORKOUT</h3>
+                    <form id="admin-add-workout-form" class="flex flex-wrap items-end gap-4">
+                        <div>
+                            <label class="mono-text text-xs text-gray-500 mb-1 block">TITLE</label>
+                            <input type="text" id="admin-workout-title" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-56" placeholder="e.g. BURPEES" required>
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs text-gray-500 mb-1 block">SUBTITLE</label>
+                            <input type="text" id="admin-workout-subtitle" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-64" placeholder="e.g. Form & pacing">
+                        </div>
+                        <button type="submit" class="py-2 px-4 bg-rust text-void mono-text text-xs tracking-widest hover:bg-amber transition-colors">ADD WORKOUT</button>
+                    </form>
+                </div>
+
+                <h3 class="mono-text text-xs tracking-widest text-rust mb-3">VISIBLE WORKOUTS (pick 3 for workout library)</h3>
+                <p class="mono-text text-xs text-gray-500 mb-4">Exactly 3 workouts will appear on the public workout library page.</p>
+                <div id="admin-visible-workouts" class="flex flex-wrap gap-4"></div>
+                <p id="admin-visible-workouts-msg" class="mono-text text-xs text-gray-500 mt-2 hidden"></p>
+
+                <h3 class="mono-text text-xs tracking-widest text-rust mb-3 mt-10">WORKOUT VIDEOS</h3>
+                <p class="mono-text text-xs text-gray-500 mb-4">Add a video from your device for each workout. They autoplay (muted) on the workout library; clicking opens full video with sound and controls.</p>
+                <div id="admin-workout-videos-list" class="space-y-3"></div>
+            </section>
+
+            <!-- Sessions tab -->
+            <section id="tab-sessions" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">RECENT SESSIONS</h2>
+                <div class="flex gap-4 mb-4">
+                    <select id="admin-session-client" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-48">
+                        <option value="">All clients</option>
+                    </select>
+                </div>
+                <div class="bg-charcoal border border-steel overflow-hidden">
+                    <table class="table-dark w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left">DATE</th>
+                                <th class="text-left">CLIENT</th>
+                                <th class="text-left">WORKOUT</th>
+                                <th class="text-left">DURATION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-sessions-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Site CMS tab (Phase 1: copy + theme + media URLs) -->
+            <section id="tab-site-cms" class="admin-tab-panel hidden">
+                <h2 class="mono-text text-xs tracking-widest text-rust mb-4">SITE CMS</h2>
+                <p class="mono-text text-sm text-gray-500 mb-6 max-w-4xl">
+                    Edit selected copy/theme/video URLs. This Phase 1 uses localStorage fallback (and optionally Firebase when configured).
+                </p>
+
+                <form id="cms-admin-form" class="space-y-10">
+                    <div class="bg-charcoal border border-steel p-6">
+                        <h3 class="mono-text text-xs tracking-widest text-rust mb-4">THEME (ACCENTS)</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">RUST</label>
+                                <input id="cms-theme-rust" class="dark-input bg-gunmetal border border-steel py-2 px-4" placeholder="#83B1F3" />
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">AMBER</label>
+                                <input id="cms-theme-amber" class="dark-input bg-gunmetal border border-steel py-2 px-4" placeholder="#9bc2f5" />
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">VOID BG</label>
+                                <input id="cms-theme-void" class="dark-input bg-gunmetal border border-steel py-2 px-4" placeholder="#0a0a0a" />
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4 mt-4">
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">STEEL</label>
+                                <input id="cms-theme-steel" class="dark-input bg-gunmetal border border-steel py-2 px-4" placeholder="#2a2a2a" />
+                            </div>
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">GUNMETAL</label>
+                                <input id="cms-theme-gunmetal" class="dark-input bg-gunmetal border border-steel py-2 px-4" placeholder="#1a1a1a" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-charcoal border border-steel p-6">
+                        <h3 class="mono-text text-xs tracking-widest text-rust mb-4">HOME HERO</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">HERO SUBTITLE</label>
+                                <textarea id="cms-home-hero-subtitle" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full min-h-[90px] resize-y" placeholder="Subtitle text"></textarea>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">PRIMARY CTA LABEL</label>
+                                    <input id="cms-home-hero-apply-label" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" />
+                                </div>
+                                <div>
+                                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">SECONDARY CTA LABEL</label>
+                                    <input id="cms-home-hero-view-programs-label" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" />
+                                </div>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">BOTTOM CTA PRIMARY</label>
+                                    <input id="cms-home-bottom-apply-label" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" />
+                                </div>
+                                <div>
+                                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">BOTTOM CTA SECONDARY</label>
+                                    <input id="cms-home-bottom-view-programs-label" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-charcoal border border-steel p-6">
+                        <h3 class="mono-text text-xs tracking-widest text-rust mb-4">RESULTS VIDEO + TESTIMONIALS</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">VIDEO URL</label>
+                                <input id="cms-results-video-url" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="assets/ethanvid3_1.mp4 or a Firebase Storage URL" />
+                            </div>
+
+                            <div class="grid gap-6">
+                                <div class="space-y-3" data-testimonial-form="0">
+                                    <p class="mono-text text-xs tracking-widest text-gray-500">TESTIMONIAL 1</p>
+                                    <input id="cms-results-t0-result" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="Result label" />
+                                    <textarea id="cms-results-t0-quote" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full min-h-[80px] resize-y" placeholder="Quote"></textarea>
+                                    <input id="cms-results-t0-author" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="— Name · duration" />
+                                </div>
+                                <div class="space-y-3" data-testimonial-form="1">
+                                    <p class="mono-text text-xs tracking-widest text-gray-500">TESTIMONIAL 2</p>
+                                    <input id="cms-results-t1-result" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="Result label" />
+                                    <textarea id="cms-results-t1-quote" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full min-h-[80px] resize-y" placeholder="Quote"></textarea>
+                                    <input id="cms-results-t1-author" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="— Name · duration" />
+                                </div>
+                                <div class="space-y-3" data-testimonial-form="2">
+                                    <p class="mono-text text-xs tracking-widest text-gray-500">TESTIMONIAL 3</p>
+                                    <input id="cms-results-t2-result" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="Result label" />
+                                    <textarea id="cms-results-t2-quote" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full min-h-[80px] resize-y" placeholder="Quote"></textarea>
+                                    <input id="cms-results-t2-author" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="— Name · duration" />
+                                </div>
+                                <div class="space-y-3" data-testimonial-form="3">
+                                    <p class="mono-text text-xs tracking-widest text-gray-500">TESTIMONIAL 4</p>
+                                    <input id="cms-results-t3-result" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="Result label" />
+                                    <textarea id="cms-results-t3-quote" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full min-h-[80px] resize-y" placeholder="Quote"></textarea>
+                                    <input id="cms-results-t3-author" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full" placeholder="— Name · duration" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 flex-wrap">
+                        <button type="submit" class="py-2 px-5 bg-rust text-void mono-text text-xs tracking-widest hover:bg-amber transition-colors">
+                            SAVE / PUBLISH
+                        </button>
+                        <span id="cms-admin-status" class="hidden mono-text text-xs tracking-widest"></span>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Admin: request appointment (create appointment in "requested" state) -->
+    <div id="admin-request-appointment-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-6 bg-void/90">
+        <div class="bg-charcoal border border-steel max-w-md w-full p-8">
+            <h3 class="display-text text-xl text-white mb-6">ADD APPOINTMENT</h3>
+            <form id="admin-request-appointment-form" class="space-y-4">
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">PREFERRED DATE</label>
+                    <input type="date" id="admin-appt-date" class="dark-input bg-gunmetal border border-steel py-2 px-4" required>
+                </div>
+
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">CLIENT</label>
+                    <select id="admin-appt-client" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full">
+                        <option value="">Select client…</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">PREFERRED TIME</label>
+                    <select id="admin-appt-time" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full">
+                        <option value="morning">Morning (8–12)</option>
+                        <option value="afternoon">Afternoon (12–5)</option>
+                        <option value="evening">Evening (5–8)</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">TYPE</label>
+                    <select id="admin-appt-type" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full">
+                        <option value="check-in">Check-in call</option>
+                        <option value="in-person">In-person session</option>
+                        <option value="video">Video call</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">NOTES (OPTIONAL)</label>
+                    <textarea id="admin-appt-notes" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full resize-none" rows="2" placeholder="Any details…"></textarea>
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button type="submit" class="flex-1 py-3 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors">
+                        SUBMIT
+                    </button>
+                    <button type="button" id="admin-request-appointment-cancel" class="flex-1 py-3 border border-steel text-gray-400 mono-text text-xs tracking-widest hover:border-rust hover:text-white transition-colors">
+                        CANCEL
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/shared.js"></script>
+    <script src="js/cms-defaults.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/cms-runtime.js"></script>
+    <script src="js/workout-videos-db.js"></script>
+    <script src="js/admin-portal.js"></script>
+    <script src="js/cms-admin.js"></script>
+</body>
+</html>

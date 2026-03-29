@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Ethan Cope</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#0a0a0a',
+                        charcoal: '#141414',
+                        gunmetal: '#1a1a1a',
+                        steel: '#2a2a2a',
+                        rust: '#83B1F3',
+                        amber: '#9bc2f5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body class="bg-void text-bone">
+
+    <div class="noise"></div>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 bg-void/80 border-b border-steel backdrop-blur-sm">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <a href="index.html" class="mono-text text-sm tracking-widest text-white font-bold">ETHAN COPE</a>
+            <div class="hidden md:flex gap-8 mono-text text-xs tracking-widest text-gray-400">
+                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
+                <a href="contact.html" class="text-rust">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
+            </div>
+            <button class="md:hidden text-white p-2 -mr-2" id="mobile-menu-btn" aria-label="Open menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        <div id="mobile-nav-panel" class="hidden md:hidden absolute top-full left-0 right-0 bg-void border-b border-steel py-4 px-6">
+            <div class="flex flex-col gap-3 mono-text text-xs tracking-widest text-gray-400 max-w-7xl mx-auto">
+                <a href="programs.html" class="hover:text-rust transition-colors py-1">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors py-1">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors py-1">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors py-1">WORKOUTS</a>
+                <a href="contact.html" class="text-rust py-1">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors py-1">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors py-1">ADMIN</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 min-h-screen pt-32 pb-24">
+        <section class="px-6 md:px-12 lg:px-24 max-w-5xl mx-auto">
+            <div class="section-marker">CONTACT</div>
+
+            <!-- Contact: action buttons only (targets in hrefs) -->
+            <div class="grid gap-8 md:grid-cols-3 mb-20">
+                <div class="contact-top-card border border-steel rounded-lg p-8 bg-charcoal/50 flex flex-col justify-center">
+                    <div class="flex gap-3">
+                        <a href="tel:8187032026" class="magnetic-btn inline-block text-sm py-3 px-4 flex-1 text-center" data-magnetic><span>CALL</span></a>
+                        <a href="sms:8187032026" class="magnetic-btn inline-block text-sm py-3 px-4 flex-1 text-center" data-magnetic><span>TEXT</span></a>
+                    </div>
+                </div>
+                <div class="contact-top-card border border-steel rounded-lg p-8 bg-charcoal/50 flex flex-col justify-center">
+                    <a href="mailto:ethanwcope@gmail.com" class="magnetic-btn inline-flex items-center justify-center text-sm py-3 px-4 w-full text-center" data-magnetic><span>EMAIL</span></a>
+                </div>
+                <div class="contact-top-card border border-steel rounded-lg p-8 bg-charcoal/50 flex flex-col justify-center">
+                    <a href="client-portal.html" class="magnetic-btn inline-flex items-center justify-center text-sm py-3 px-4 w-full text-center" data-magnetic><span>GO TO PORTAL</span></a>
+                </div>
+            </div>
+
+            <h1 class="display-text text-4xl md:text-6xl text-white mb-2">FIND YOUR FIT</h1>
+            <p class="mono-text text-sm text-gray-500 mb-8">Short quiz — one question at a time. Takes under a minute.</p>
+
+            <div id="quiz-wizard" class="max-w-xl mb-6">
+                <div class="quiz-progress-track">
+                    <div id="quiz-progress-fill" class="quiz-progress-fill"></div>
+                </div>
+                <p id="quiz-step-label" class="mono-text text-xs text-rust tracking-widest">STEP 1 OF 4</p>
+            </div>
+
+            <!-- Quiz (wizard) -->
+            <form id="contact-quiz" class="max-w-xl">
+                <div class="quiz-step-panel is-active" data-quiz-step="1">
+                    <label class="mono-text text-xs tracking-widest text-rust mb-4 block">NUTRITION</label>
+                    <p class="text-gray-200 text-lg mb-6">Do you struggle with nutrition or meal planning?</p>
+                    <div class="space-y-4">
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="nutrition" value="yes" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Yes, I need help with both</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="nutrition" value="sometimes" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Sometimes, mostly training</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="nutrition" value="no" class="accent-rust shrink-0">
+                            <span class="text-gray-300">No, I’m good on nutrition</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-step-panel" data-quiz-step="2">
+                    <label class="mono-text text-xs tracking-widest text-rust mb-4 block">EXERCISE</label>
+                    <p class="text-gray-200 text-lg mb-6">How would you describe your current exercise routine?</p>
+                    <div class="space-y-4">
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="exercise" value="consistent" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Consistent, I train regularly</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="exercise" value="inconsistent" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Inconsistent, life gets in the way</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="exercise" value="starting" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Just starting or returning</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="exercise" value="limitations" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Dealing with limitations or injuries</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-step-panel" data-quiz-step="3">
+                    <label class="mono-text text-xs tracking-widest text-rust mb-4 block">INJURIES / LIMITATIONS</label>
+                    <p class="text-gray-200 text-lg mb-6">Do you have any injuries or physical limitations we should know about?</p>
+                    <div class="space-y-4">
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="injuries" value="none" class="accent-rust shrink-0">
+                            <span class="text-gray-300">None</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="injuries" value="one" class="accent-rust shrink-0">
+                            <span class="text-gray-300">One area I’m working around</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="injuries" value="multiple" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Multiple, I need careful programming</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-step-panel" data-quiz-step="4">
+                    <label class="mono-text text-xs tracking-widest text-rust mb-4 block">SCHEDULE</label>
+                    <p class="text-gray-200 text-lg mb-6">How would you describe your schedule?</p>
+                    <div class="space-y-4">
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="schedule" value="very-busy" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Very busy, I need flexibility and minimal calls</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="schedule" value="moderate" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Moderate, I can do weekly check-ins</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer p-3 border border-transparent hover:border-steel rounded transition-colors">
+                            <input type="radio" name="schedule" value="flexible" class="accent-rust shrink-0">
+                            <span class="text-gray-300">Flexible, I can commit to regular in-person or video sessions</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 mt-10">
+                    <button type="button" id="quiz-back" class="hidden mono-text text-xs tracking-widest text-gray-500 border border-steel px-6 py-3 hover:border-rust hover:text-rust transition-colors">BACK</button>
+                    <button type="button" id="quiz-next" class="magnetic-btn py-4 px-8 text-sm" data-magnetic><span>NEXT</span></button>
+                    <button type="submit" id="quiz-submit" class="hidden magnetic-btn py-4 px-8 text-sm" data-magnetic><span>SEE MY OPTIONS</span></button>
+                </div>
+            </form>
+
+            <!-- Results: 3 options, pick one -->
+            <div id="quiz-results" class="hidden mt-16">
+                <h2 class="display-text text-2xl md:text-3xl text-white mb-2">HERE’S WHAT WE RECOMMEND</h2>
+                <p class="text-gray-500 text-sm mb-8">Pick the option that sounds best. You’ll go to checkout and get client portal access after payment.</p>
+                <div class="space-y-6" id="quiz-options-list"></div>
+                <p class="mono-text text-xs text-gray-500 mt-8">Not sure? You can always change your selection before checkout.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-charcoal border-t border-steel py-8 px-6 text-center mono-text text-xs text-gray-600 tracking-widest">
+        <a href="index.html" class="hover:text-rust transition-colors">ETHAN COPE</a> · <a href="contact.html" class="hover:text-rust transition-colors">CONTACT</a>
+    </footer>
+
+    <script src="js/shared.js"></script>
+    <script src="js/contact-quiz.js"></script>
+</body>
+</html>

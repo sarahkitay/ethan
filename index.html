@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethan Cope | Performance You Can Trust</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#0a0a0a',
+                        charcoal: '#141414',
+                        gunmetal: '#1a1a1a',
+                        steel: '#2a2a2a',
+                        concrete: '#3a3a3a',
+                        rust: '#83B1F3',
+                        amber: '#9bc2f5',
+                        bone: '#e5e5e5',
+                        smoke: '#888888'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body data-page="home">
+
+    <!-- Noise Overlay -->
+    <div class="noise"></div>
+
+    <!-- WebGL Background -->
+    <div id="webgl-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 mix-blend-difference">
+        <div class="flex justify-between items-center">
+            <a href="index.html" class="brand-diagonal mono-text text-sm tracking-widest text-white font-bold">ETHAN COPE</a>
+            <div class="hidden md:flex gap-8 mono-text text-xs tracking-widest text-white">
+                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
+            </div>
+            <button class="md:hidden text-white" id="mobile-menu-btn" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-wrapper">
+        <div class="hero-bg" aria-hidden="true">
+            <img src="assets/ethan.png" alt="" class="hero-bg-img">
+            <div class="hero-bg-fade"></div>
+        </div>
+        <div class="hero-content px-6 md:px-12 w-full flex flex-col md:flex-row md:items-start md:justify-between gap-12 md:gap-16">
+            <div class="text-left max-w-xl md:max-w-2xl">
+                <h1 class="display-text text-[10vw] md:text-[8vw] lg:text-[6vw] text-white mb-4 leading-tight">
+                    <div class="reveal-text overflow-hidden">
+                        <span class="inline-block">WHERE ELITE</span>
+                    </div>
+                    <div class="reveal-text overflow-hidden">
+                        <span class="inline-block text-stroke">PHYSIQUES</span>
+                    </div>
+                    <div class="reveal-text overflow-hidden">
+                        <span class="inline-block">ARE BUILT</span>
+                    </div>
+                </h1>
+                <p class="subheader-thin mono-text text-sm md:text-base text-gray-400 max-w-lg tracking-wide opacity-0 mt-0 mb-0" id="hero-sub">
+                    Programs built for longevity. No templates. No guesswork. Built for those who refuse mediocrity.
+                </p>
+            </div>
+            <div class="hero-cta-wrapper md:flex md:justify-end md:w-full">
+                <div class="flex flex-col items-center gap-5 opacity-0 -mb-5 md:-mb-8" id="hero-cta">
+                    <a href="#contact" class="magnetic-btn" data-magnetic>
+                        <span id="hero-apply-label">Apply Now</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#programs" class="subheader-thin mono-text text-xs tracking-widest text-gray-400 hover:text-rust transition-colors text-center border-b border-transparent hover:border-rust pb-0.5">
+                        <span id="hero-view-programs-label">View Programs</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom CTA bar (shows on scroll) -->
+        <div id="bottom-cta" class="bottom-cta-bar">
+            <div class="bottom-cta-inner">
+                <a href="index.html#contact" class="magnetic-btn" data-magnetic>
+                    <span id="bottom-cta-apply-label">APPLY NOW</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a href="#programs" class="bottom-cta-secondary">
+                    <span id="bottom-cta-view-programs-label">VIEW PROGRAMS</span>
+                </a>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- Method Section - Screen Fill -->
+    <section id="method" class="screen-section bg-charcoal relative">
+        <div class="absolute inset-0 z-0">
+            <div class="parallax-wrapper">
+                <img src="assets/ethan2.png" 
+                     alt="Training" 
+                     class="parallax-img" 
+                     id="method-img">
+                <div class="absolute inset-0 bg-gradient-to-r from-void via-void/80 to-transparent"></div>
+            </div>
+        </div>
+        
+        <div class="relative z-10 w-full px-6 md:px-12 lg:px-24">
+            <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="section-marker">01 THE METHOD</div>
+                    
+                    <h2 class="display-text text-5xl md:text-7xl text-white">
+                        SCIENCE<br>
+                        <span class="text-rust">+</span> SUFFERING
+                    </h2>
+                    
+                    <div class="space-y-6 text-gray-400 text-lg leading-relaxed max-w-lg">
+                        <p class="border-l-2 border-rust pl-6">
+                            Five years in the trenches of competitive HYROX. Hundreds of body transformations. One truth: elite physiques are built at the intersection of data and discipline.
+                        </p>
+                        <p>
+                            We don't do cookie-cutter. Every program is diagnostic, built from movement analysis, metabolic testing, and lifestyle analysis.
+                        </p>
+                    </div>
+                    
+                    <div class="line-draw w-24 bg-rust h-px"></div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="100" data-suffix="+">0</div>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mt-2">TRANSFORMATIONS</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="5">0</div>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mt-2">YEARS ACTIVE</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number text-white" data-count="15">0</div>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mt-2">CLIENT LIMIT</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="24">0</div>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mt-2">HOUR ACCESS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="screen-section bg-void py-24">
+        <div class="w-full px-6 md:px-12 lg:px-24">
+            <div class="max-w-3xl mx-auto">
+                <div class="section-marker">02 ABOUT</div>
+                <h2 class="display-text text-4xl md:text-5xl text-white mb-6">
+                    ETHAN COPE
+                </h2>
+                <p class="subheader-thin mono-text text-sm text-rust tracking-widest mb-8">STRENGTH, HYPERTROPHY & NUTRITION COACH</p>
+                <div class="space-y-6 subheader-thin mono-text text-sm text-white tracking-widest leading-relaxed">
+                    <p>
+                        I became a trainer at 20 because fitness changed everything. How I moved, how I felt, how I showed up. It gave me a clearer sense of who I was, and I've spent the five years since helping others find that same thing.
+                    </p>
+                    <p>
+                        I specialize in strength, hypertrophy, and nutrition. What that looks like in practice: clients who came to me with nagging injuries they had learned to live around start moving without pain. People who had stopped trusting their own bodies learn to train with intention. Clothes fit differently. Energy shows up in places it had not been in years.
+                    </p>
+                    <p>
+                        The work that has shaped me most has been at Zooz Fitness in Woodland Hills, an adaptive and inclusive gym where I lead group classes and train individuals with varying disabilities. Watching someone who struggles to get out of bed show up consistently, week after week, and leave with a completely new relationship to their own body. That is not background noise for me. That is the whole point.
+                    </p>
+                    <p>
+                        It has taught me that results come from patience, consistency, and actually being present for the person in front of you.
+                    </p>
+                    <p>
+                        I keep a small roster for exactly that reason. If you are ready to make a real change, I am ready to show up for you.
+                    </p>
+                </div>
+                <div class="mt-10 text-center">
+                    <a href="#contact" class="magnetic-btn inline-block" data-magnetic><span>APPLY TO WORK WITH ME</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section - sticky scroll reveal (content first so no black gap above) -->
+    <section id="programs" class="programs-scroll-section programs-section bg-void relative">
+        <div class="programs-scroll-content">
+            <div class="programs-hero">
+                <p class="programs-intro mono-text text-xs md:text-sm tracking-[0.35em] text-rust mb-6">01 — PROGRAMS</p>
+                <h2 class="programs-title display-text text-white">PROGRAMS</h2>
+            </div>
+            <div class="programs-grid">
+                <div class="program-reveal-card program-card group">
+                    <div class="mono-text text-xs tracking-widest text-gray-500 mb-4">HYROX PREP</div>
+                    <h3 class="display-text text-3xl text-white mb-4 group-hover:text-rust transition-colors">COMPETE</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">
+                        Sport-specific periodization for HYROX athletes. Running mechanics, erg technique, and competition taper protocols.
+                    </p>
+                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-steel pl-3">WHO IT’S FOR · <span class="text-gray-400">Intermediate–advanced</span> · <span class="text-rust">Performance / race prep</span></p>
+                    <ul class="space-y-3 mb-8 mono-text text-xs text-gray-500">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>12-16 WEEK CYCLES</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>VIDEO ANALYSIS</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>PACING STRATEGY</li>
+                    </ul>
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="display-text text-4xl text-white">$299</span>
+                        <span class="mono-text text-xs text-gray-500">/MO</span>
+                    </div>
+                    <a href="#contact" class="block w-full py-4 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust hover:text-void transition-all text-center">SELECT</a>
+                </div>
+                <div class="program-reveal-card program-card program-card-elite border-rust bg-gunmetal">
+                    <div class="program-card-popular mono-text text-[10px] md:text-xs tracking-[0.25em] text-void bg-rust px-3 py-1.5 inline-block mb-4 font-bold">MOST POPULAR</div>
+                    <h3 class="display-text text-3xl md:text-4xl text-white mb-4">ELITE</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">
+                        Complete body recomposition and performance optimization. For those who want the full arsenal.
+                    </p>
+                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-rust/50 pl-3">WHO IT’S FOR · <span class="text-gray-400">All levels</span> · <span class="text-rust">Fat loss + performance</span></p>
+                    <ul class="space-y-3 mb-8 mono-text text-xs text-gray-400">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>CUSTOM TRAINING & NUTRITION</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>WEEKLY VIDEO CALLS</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>24/7 DIRECT ACCESS</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>SUPPLEMENT PROTOCOLS</li>
+                    </ul>
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="display-text text-4xl text-rust">$499</span>
+                        <span class="mono-text text-xs text-gray-500">/MO</span>
+                    </div>
+                    <a href="#contact" class="block w-full py-4 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors text-center">APPLY NOW</a>
+                </div>
+                <div class="program-reveal-card program-card">
+                    <div class="mono-text text-xs tracking-widest text-gray-500 mb-4">LIMITED</div>
+                    <h3 class="display-text text-3xl text-white mb-4 group-hover:text-rust transition-colors">VIP</h3>
+                    <p class="text-gray-400 mb-4 text-sm leading-relaxed">
+                        The complete package. In-person sessions combined with full online coaching for maximum results.
+                    </p>
+                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-steel pl-3">WHO IT’S FOR · <span class="text-gray-400">Advanced / VIP</span> · <span class="text-rust">Max results + accountability</span></p>
+                    <ul class="space-y-3 mb-8 mono-text text-xs text-gray-500">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>4X MONTHLY IN-PERSON</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>TRAINING CAMP ACCESS</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>PRIORITY SCHEDULING</li>
+                    </ul>
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="display-text text-4xl text-white">$899</span>
+                        <span class="mono-text text-xs text-gray-500">/MO</span>
+                    </div>
+                    <a href="#contact" class="block w-full py-4 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust hover:text-void transition-all text-center">INQUIRE</a>
+                </div>
+            </div>
+        </div>
+        <div class="programs-scroll-spacer"></div>
+    </section>
+
+    <!-- Results Section - Full Screen Slider -->
+    <section id="results" class="relative bg-charcoal">
+        <div class="screen-section">
+            <div class="absolute inset-0 z-0">
+                <img src="assets/ethan3.png" 
+                     alt="" 
+                     class="w-full h-full object-cover opacity-30 grayscale">
+                <div class="absolute inset-0 bg-gradient-to-t from-void via-void/90 to-void/70"></div>
+            </div>
+            
+            <div class="relative z-10 w-full px-6 md:px-12 lg:px-24">
+                <div class="max-w-7xl mx-auto">
+                    <div class="section-marker mb-16">04 RESULTS</div>
+                    
+                    <div class="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 class="display-text text-5xl md:text-7xl text-white mb-8">
+                                PROVEN<br>OUTCOMES
+                            </h2>
+                            <div class="space-y-8">
+                                <div class="border-l-2 border-rust pl-6">
+                                    <div class="result-stat-counter display-text text-3xl text-rust mb-2" data-counter-type="percent" data-target="12" data-prefix="-" data-suffix="% BODY FAT">0% BODY FAT</div>
+                                    <p class="text-gray-400 text-sm">Sarah M., 16 Week Transformation</p>
+                                </div>
+                                <div class="border-l-2 border-rust pl-6">
+                                    <div class="result-stat-counter display-text text-3xl text-rust mb-2" data-counter-type="time" data-min="4" data-sec="32" data-prefix="-">0:00 TIME</div>
+                                    <p class="text-gray-400 text-sm">Marcus T., HYROX Elite Qualification</p>
+                                </div>
+                                <div class="border-l-2 border-rust pl-6">
+                                    <div class="result-stat-counter display-text text-3xl text-rust mb-2" data-counter-type="number" data-target="40" data-prefix="+" data-suffix="LBS">0LBS</div>
+                                    <p class="text-gray-400 text-sm">James K., Lean Mass Added</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative">
+                            <div class="aspect-[3/4] bg-steel relative overflow-hidden">
+                                <img src="assets/ethanpic5.jpeg" 
+                                     alt="Transformation" 
+                                     class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                            </div>
+                            <div class="absolute -bottom-6 -right-6 bg-rust text-void p-6 mono-text text-xs tracking-widest font-bold">
+                                100+ TRANSFORMATIONS
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="screen-section bg-void relative overflow-hidden pt-24">
+        <!-- Background image + black overlay behind "JOIN THE 15" -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <img src="assets/ethanpic.jpg" alt="" class="w-full h-full object-cover grayscale opacity-30" />
+            <div class="absolute inset-0 bg-black/75"></div>
+        </div>
+
+        <!-- Background Text -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] z-[1]">
+            <span class="display-text text-[20vw] text-white whitespace-nowrap">APPLY</span>
+        </div>
+        
+        <div class="relative z-10 w-full px-6 md:px-12 lg:px-24 pb-24">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <div class="section-marker justify-center flex">06 INTAKE</div>
+                    <h2 class="display-text text-5xl md:text-7xl text-white mb-6">
+                        JOIN THE <span class="text-rust">15</span>
+                    </h2>
+                    <p class="subheader-thin text-gray-400 max-w-xl mx-auto mono-text text-sm tracking-wide">
+                        I personally review every application. If we're a fit, you'll receive onboarding within 24 hours. If not, I'll recommend someone better suited.
+                    </p>
+                    <p class="mt-6 mono-text text-xs tracking-widest text-rust max-w-xl mx-auto">
+                        Limited client intake each month — apply early to secure a spot.
+                    </p>
+                </div>
+                
+                <form id="contact-form" class="space-y-8 max-w-2xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">NAME</label>
+                            <input type="text" id="contact-name" name="name" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">EMAIL</label>
+                            <input type="email" id="contact-email" name="email" class="dark-input bg-gunmetal border border-steel py-3 px-4" placeholder="john@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">PRIMARY GOAL</label>
+                        <select id="contact-goal" name="goal" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full">
+                            <option value="" class="bg-void">SELECT OBJECTIVE...</option>
+                            <option value="hyrox" class="bg-void">HYROX COMPETITION</option>
+                            <option value="body" class="bg-void">BODY RECOMPOSITION</option>
+                            <option value="strength" class="bg-void">STRENGTH & POWER</option>
+                            <option value="lifestyle" class="bg-void">LIFESTYLE OVERHAUL</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">MESSAGE</label>
+                        <textarea id="contact-message" name="message" class="dark-input bg-gunmetal border border-steel py-3 px-4 resize-none w-full" rows="4" placeholder="Tell me about your current training..."></textarea>
+                    </div>
+                    
+                    <div class="pt-8 pb-16 text-center">
+                        <button type="submit" class="magnetic-btn text-lg px-12 py-4" data-magnetic>
+                            <span>SUBMIT APPLICATION</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo popup: show after scrolling full page -->
+    <div id="nutrition-promo-popup" class="fixed inset-0 z-[10004] flex items-center justify-center p-4 bg-black/70 hidden">
+        <div class="bg-charcoal border border-steel max-w-md w-full p-8 text-center">
+            <p class="text-white mb-6">Don't know what your macros should look like? Find out using our free intake calculator.</p>
+            <a href="nutrition.html" id="nutrition-promo-btn" class="magnetic-btn inline-block" data-magnetic><span>GO TO INTAKE CALCULATOR</span></a>
+            <button type="button" id="nutrition-promo-close" class="mt-4 mono-text text-xs text-gray-500 hover:text-white block w-full" aria-label="Close">Close</button>
+        </div>
+    </div>
+
+    <!-- Intake calculator CTA section (links to nutrition page) -->
+    <section class="screen-section bg-void relative overflow-hidden py-20 min-h-[50vh] flex items-center">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <img src="assets/ethanpic6.JPEG" alt="" class="w-full h-full object-cover object-top opacity-40 grayscale" />
+            <div class="absolute inset-0 bg-black/70"></div>
+        </div>
+        <div class="relative z-10 w-full px-6 md:px-12 lg:px-24">
+            <div class="max-w-3xl mx-auto p-8 md:p-10 text-center">
+                <p class="mono-text text-xs tracking-widest text-rust mb-3">NUTRITION</p>
+                <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-6 subheader-thin">Unsure what your macros should be? Try our intake calculator now.</p>
+                <a href="nutrition.html" class="magnetic-btn inline-block" data-magnetic><span>GO TO INTAKE CALCULATOR</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-glass">
+        <div class="footer-inner max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 px-6 md:px-12">
+            <div class="display-text text-2xl text-white">
+                <a href="index.html">ETHAN COPE</a>
+            </div>
+            
+            <div class="flex gap-6 md:gap-8 mono-text text-xs tracking-widest text-gray-500 flex-wrap justify-center">
+                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
+                <a href="mailto:ethanwcope@gmail.com" class="hover:text-rust transition-colors">ETHANWCOPE@GMAIL.COM</a>
+                <a href="#" class="hover:text-rust transition-colors">INSTAGRAM</a>
+                <a href="#" class="hover:text-rust transition-colors">YOUTUBE</a>
+            </div>
+        </div>
+        <div class="footer-inner max-w-7xl mx-auto mt-8 pt-8 border-t border-steel text-center mono-text text-xs text-gray-600 tracking-widest px-6 md:px-12">
+            © 2024 ETHAN COPE. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+
+    <script src="js/cms-defaults.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/cms-runtime.js"></script>
+    <script src="js/home.js"></script>
+    <script type="module" src="js/programs-motion.js"></script>
+</body>
+</html>
