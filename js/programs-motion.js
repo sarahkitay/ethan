@@ -1,7 +1,8 @@
 /**
  * Programs section: scroll-driven reveal (Motion).
- * Sequence: "01 — PROGRAMS" fades in, then large PROGRAMS title, then cards scale in.
- * Mobile: earlier keyframes + shorter spacer (CSS) so reveals finish without a long empty scroll.
+ * Offsets: progress 0 when the section enters from below ("start end"), 1 when it has
+ * moved through the viewport — so opacity/scales fade IN while scrolling down.
+ * (Using "start start" as the first offset inverts progress with sticky + tall sections.)
  */
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
 
@@ -33,14 +34,14 @@ if (prefersReducedMotion) {
   const intro = document.querySelector('.programs-intro');
   const title = document.querySelector('.programs-title');
 
-  const introTimes = isMobile ? [0, 0.08, 1] : [0, 0.15, 1];
-  const introEnd = isMobile ? '0.22 end' : '0.3 end';
-  const titleTimes = isMobile ? [0, 0.12, 1] : [0, 0.28, 1];
-  const titleEnd = isMobile ? '0.28 end' : '0.42 end';
+  const introTimes = isMobile ? [0, 0.12, 1] : [0, 0.2, 1];
+  const titleTimes = isMobile ? [0, 0.18, 1] : [0, 0.35, 1];
   const titleY = isMobile ? '0.75rem' : '1.5rem';
-  const cardOpacityTimes = isMobile ? [0, 0.2, 1] : [0, 0.55, 1];
-  const cardScaleTimes = isMobile ? [0, 0.14, 1] : [0, 0.3, 1];
-  const cardEndFactor = isMobile ? 0.88 : 1;
+
+  /* Headline: fade in as section rises from bottom until top aligns (pins) */
+  const heroScrollOffset = ['start end', 'start start'];
+  /* Cards: same direction (fade in on scroll down) over the full section pass */
+  const cardsScrollOffset = ['start end', 'end start'];
 
   if (section) {
     if (intro) {
@@ -49,7 +50,7 @@ if (prefersReducedMotion) {
           times: introTimes,
           easing: easeSoft
         }),
-        { target: section, offset: ['start start', introEnd] }
+        { target: section, offset: heroScrollOffset }
       );
     }
     if (title) {
@@ -58,7 +59,7 @@ if (prefersReducedMotion) {
           times: titleTimes,
           easing: easeOut
         }),
-        { target: section, offset: ['start start', titleEnd] }
+        { target: section, offset: heroScrollOffset }
       );
     }
   }
@@ -70,23 +71,28 @@ if (prefersReducedMotion) {
       cubicBezier(0.87, 0, 0.13, 1)
     ];
 
+    const baseOpacityMid = isMobile ? 0.28 : 0.42;
+    const baseScaleMid = isMobile ? 0.2 : 0.32;
+    const stagger = isMobile ? 0.07 : 0.09;
+
     cards.forEach((card, index) => {
-      const endOffset = `${cardEndFactor - index * 0.04} end`;
+      const opacityTimes = [0, Math.min(0.85, baseOpacityMid + index * stagger), 1];
+      const scaleTimes = [0, Math.min(0.75, baseScaleMid + index * stagger), 1];
 
       scroll(
         animate(card, { opacity: [0, 0, 1] }, {
-          times: cardOpacityTimes,
+          times: opacityTimes,
           easing: cubicBezier(0.61, 1, 0.88, 1)
         }),
-        { target: section, offset: ['start start', endOffset] }
+        { target: section, offset: cardsScrollOffset }
       );
 
       scroll(
         animate(card, { scale: [0, 0, 1] }, {
-          times: cardScaleTimes,
+          times: scaleTimes,
           easing: scaleEasings[index]
         }),
-        { target: section, offset: ['start start', endOffset] }
+        { target: section, offset: cardsScrollOffset }
       );
     });
   }
