@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     background-color: #0a0a0a;
     color: #e5e5e5;
@@ -179,6 +183,12 @@ body {
     min-height: 220vh;
 }
 
+@media (max-width: 768px) {
+    .programs-scroll-spacer {
+        min-height: 125vh;
+    }
+}
+
 .programs-scroll-content {
     min-height: 100vh;
     width: 100%;
@@ -192,10 +202,34 @@ body {
     overflow: hidden;
 }
 
+@media (max-width: 1024px) {
+    .programs-scroll-content {
+        padding: 8.5rem 1rem 2rem;
+    }
+
+    .programs-hero {
+        padding-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .programs-scroll-content {
+        padding: 5.75rem 0.35rem 1.25rem;
+        min-height: auto;
+        justify-content: flex-start;
+    }
+}
+
 .programs-hero {
     text-align: center;
     margin-bottom: 0;
     padding-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+    .programs-hero {
+        padding-bottom: 0.35rem;
+    }
 }
 
 .programs-intro {
@@ -212,6 +246,13 @@ body {
     will-change: opacity, transform;
 }
 
+@media (max-width: 768px) {
+    .programs-title {
+        font-size: clamp(1.85rem, 11vw, 2.75rem);
+        line-height: 0.9;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .programs-intro,
     .programs-title {
@@ -222,7 +263,7 @@ body {
 
 .programs-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(1rem, 4vw, 2.5rem);
     max-width: 1400px;
     width: 100%;
@@ -230,10 +271,18 @@ body {
     padding: 0 1rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .programs-grid {
-        grid-template-columns: 1fr;
-        max-width: 420px;
+        gap: 0.65rem;
+        padding: 0 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .programs-grid {
+        gap: 0.3rem;
+        padding: 0 0.2rem;
+        max-width: 100%;
     }
 }
 
@@ -446,6 +495,82 @@ body {
         0 0 48px rgba(131, 177, 243, 0.14);
     border-color: rgba(131, 177, 243, 0.55);
     filter: brightness(1.06);
+}
+
+/* Home programs: three columns on all breakpoints; compact on small screens */
+@media (max-width: 1024px) {
+    .programs-section .program-reveal-card.program-card {
+        padding: 1.35rem 0.85rem !important;
+    }
+
+    .programs-section .program-card-elite {
+        padding: 1.5rem 0.85rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .programs-section .program-reveal-card.program-card {
+        padding: 0.55rem 0.35rem !important;
+    }
+
+    .programs-section .program-card-elite {
+        padding: 0.65rem 0.4rem !important;
+    }
+
+    .programs-section .program-reveal-card .mono-text.tracking-widest.mb-4,
+    .programs-section .program-reveal-card .program-card-popular {
+        font-size: 0.45rem !important;
+        letter-spacing: 0.08em !important;
+        margin-bottom: 0.25rem !important;
+        padding-top: 0.15rem !important;
+        padding-bottom: 0.15rem !important;
+    }
+
+    .programs-section .program-reveal-card h3.display-text {
+        font-size: clamp(0.62rem, 3.4vw, 0.85rem) !important;
+        line-height: 1.05 !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .programs-section .program-reveal-card > p.text-gray-400 {
+        display: none;
+    }
+
+    .programs-section .program-reveal-card > p.mono-text.border-l {
+        font-size: 0.45rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.35rem !important;
+        padding-left: 0.25rem !important;
+    }
+
+    .programs-section .program-reveal-card ul {
+        display: none;
+    }
+
+    .programs-section .program-reveal-card .flex.items-baseline {
+        margin-bottom: 0.35rem !important;
+    }
+
+    .programs-section .program-reveal-card .display-text.text-4xl {
+        font-size: clamp(0.85rem, 4vw, 1.1rem) !important;
+    }
+
+    .programs-section .program-reveal-card > a:last-child {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 2.5rem !important;
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.35rem !important;
+        font-size: 0.5rem !important;
+        letter-spacing: 0.06em !important;
+    }
+}
+
+@media (hover: none) {
+    .program-card:hover {
+        transform: none;
+    }
 }
 
 /* Elite tier: larger footprint + glow */

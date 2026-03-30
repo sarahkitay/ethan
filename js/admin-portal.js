@@ -13,15 +13,15 @@ const CHECKOUT_CLIENTS_KEY = 'ethan_cope_checkout_clients';
 const DEMO_ADMIN = { email: 'admin@ethancope.com', password: 'admin123' };
 
 const DEMO_ADMIN_CLIENTS = [
-    { id: 'c1', name: 'Alex', email: 'client@example.com', programId: 'p1', programName: 'Elite', startDate: '2024-01-15' },
-    { id: 'c2', name: 'Jordan', email: 'jordan@example.com', programId: 'p2', programName: 'Compete', startDate: '2024-02-01' },
-    { id: 'c3', name: 'Sam', email: 'sam@example.com', programId: 'p1', programName: 'Elite', startDate: '2024-01-20' }
+    { id: 'c1', name: 'Alex', email: 'client@example.com', programId: 'p1', programName: 'Online Coaching', startDate: '2024-01-15' },
+    { id: 'c2', name: 'Jordan', email: 'jordan@example.com', programId: 'p2', programName: 'Template Bundle', startDate: '2024-02-01' },
+    { id: 'c3', name: 'Sam', email: 'sam@example.com', programId: 'p3', programName: 'In-Person', startDate: '2024-01-20' }
 ];
 
 const DEMO_ADMIN_PROGRAMS = [
-    { id: 'p1', name: 'Elite Block 1', type: 'ELITE', clientCount: 2, duration: '12 weeks' },
-    { id: 'p2', name: 'HYROX Compete Phase', type: 'COMPETE', clientCount: 1, duration: '16 weeks' },
-    { id: 'p3', name: 'VIP Monthly', type: 'VIP', clientCount: 0, duration: 'Ongoing' }
+    { id: 'p1', name: 'Online Coaching ($75/wk)', type: 'COACHING', clientCount: 2, duration: 'Ongoing' },
+    { id: 'p2', name: 'Program templates / bundle', type: 'TEMPLATE', clientCount: 1, duration: 'Per calendar' },
+    { id: 'p3', name: 'In-Person ($120/session)', type: 'IN_PERSON', clientCount: 0, duration: 'Weekly session' }
 ];
 
 const ALL_WORKOUTS = [

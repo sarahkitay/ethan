@@ -57,10 +57,10 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 mix-blend-difference">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center max-w-7xl mx-auto w-full relative">
             <a href="index.html" class="brand-diagonal mono-text text-sm tracking-widest text-white font-bold">ETHAN COPE</a>
             <div class="hidden md:flex gap-8 mono-text text-xs tracking-widest text-white">
-                <a href="programs.html" class="hover:text-rust transition-colors">PROGRAMS</a>
+                <a href="#programs" class="hover:text-rust transition-colors">PROGRAMS</a>
                 <a href="results.html" class="hover:text-rust transition-colors">RESULTS</a>
                 <a href="nutrition.html" class="hover:text-rust transition-colors">NUTRITION</a>
                 <a href="workout-library.html" class="hover:text-rust transition-colors">WORKOUTS</a>
@@ -68,13 +68,24 @@
                 <a href="client-portal.html" class="hover:text-rust transition-colors">CLIENT PORTAL</a>
                 <a href="admin-portal.html" class="hover:text-rust transition-colors">ADMIN</a>
             </div>
-            <button class="md:hidden text-white" id="mobile-menu-btn" aria-label="Menu">
+            <button type="button" class="md:hidden text-white p-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-panel">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
             </button>
+        </div>
+        <div id="mobile-nav-panel" class="hidden md:hidden absolute top-full left-0 right-0 bg-void/95 border-b border-steel backdrop-blur-md py-4 px-6 mix-blend-normal">
+            <div class="flex flex-col gap-1 mono-text text-xs tracking-widest text-gray-300 max-w-7xl mx-auto">
+                <a href="#programs" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">PROGRAMS</a>
+                <a href="results.html" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">RESULTS</a>
+                <a href="nutrition.html" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">NUTRITION</a>
+                <a href="workout-library.html" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">WORKOUTS</a>
+                <a href="contact.html" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">CONTACT</a>
+                <a href="client-portal.html" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">CLIENT PORTAL</a>
+                <a href="admin-portal.html" class="hover:text-rust transition-colors py-3 min-h-[44px] flex items-center">ADMIN</a>
+            </div>
         </div>
     </nav>
 
@@ -225,62 +236,62 @@
     <section id="programs" class="programs-scroll-section programs-section bg-void relative">
         <div class="programs-scroll-content">
             <div class="programs-hero">
-                <p class="programs-intro mono-text text-xs md:text-sm tracking-[0.35em] text-rust mb-6">01 — PROGRAMS</p>
+                <p class="programs-intro mono-text text-xs md:text-sm tracking-[0.35em] text-rust mb-2 md:mb-6">01 — PROGRAMS</p>
                 <h2 class="programs-title display-text text-white">PROGRAMS</h2>
             </div>
             <div class="programs-grid">
                 <div class="program-reveal-card program-card group">
-                    <div class="mono-text text-xs tracking-widest text-gray-500 mb-4">HYROX PREP</div>
-                    <h3 class="display-text text-3xl text-white mb-4 group-hover:text-rust transition-colors">COMPETE</h3>
+                    <div class="mono-text text-xs tracking-widest text-gray-500 mb-4">SELF-GUIDED</div>
+                    <h3 class="display-text text-3xl text-white mb-4 group-hover:text-rust transition-colors">TEMPLATES</h3>
                     <p class="text-gray-400 mb-4 text-sm leading-relaxed">
-                        Sport-specific periodization for HYROX athletes. Running mechanics, erg technique, and competition taper protocols.
+                        Science-backed programs with tempo, sets, reps, cues, and substitutions—gym, home, or limited equipment.
                     </p>
-                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-steel pl-3">WHO IT’S FOR · <span class="text-gray-400">Intermediate–advanced</span> · <span class="text-rust">Performance / race prep</span></p>
+                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-steel pl-3">INCLUDES · <span class="text-gray-400">Full body & split options</span> · <span class="text-rust">Bundle all 4 for $100</span></p>
                     <ul class="space-y-3 mb-8 mono-text text-xs text-gray-500">
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>12-16 WEEK CYCLES</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>VIDEO ANALYSIS</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>PACING STRATEGY</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>4 STRUCTURED TEMPLATES @ $30</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>EXERCISE SUBSTITUTIONS</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>WEEKLY CALENDAR LAYOUTS</li>
                     </ul>
-                    <div class="flex items-baseline gap-2 mb-6">
-                        <span class="display-text text-4xl text-white">$299</span>
-                        <span class="mono-text text-xs text-gray-500">/MO</span>
+                    <div class="flex items-baseline gap-2 mb-1 flex-wrap">
+                        <span class="display-text text-4xl text-white">$30</span>
+                        <span class="mono-text text-xs text-gray-500">ea · bundle $100</span>
                     </div>
-                    <a href="#contact" class="block w-full py-4 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust hover:text-void transition-all text-center">SELECT</a>
+                    <a href="programs.html#program-templates" class="block w-full py-4 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust hover:text-void transition-all text-center">VIEW TEMPLATES</a>
                 </div>
                 <div class="program-reveal-card program-card program-card-elite border-rust bg-gunmetal">
                     <div class="program-card-popular mono-text text-[10px] md:text-xs tracking-[0.25em] text-void bg-rust px-3 py-1.5 inline-block mb-4 font-bold">MOST POPULAR</div>
-                    <h3 class="display-text text-3xl md:text-4xl text-white mb-4">ELITE</h3>
+                    <h3 class="display-text text-3xl md:text-4xl text-white mb-4">ONLINE</h3>
                     <p class="text-gray-400 mb-4 text-sm leading-relaxed">
-                        Complete body recomposition and performance optimization. For those who want the full arsenal.
+                        Fully personalized training and nutrition, weekly virtual check-ins, meal plans to your macros, form video feedback, and 24/7 support.
                     </p>
-                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-rust/50 pl-3">WHO IT’S FOR · <span class="text-gray-400">All levels</span> · <span class="text-rust">Fat loss + performance</span></p>
+                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-rust/50 pl-3">WHO IT’S FOR · <span class="text-gray-400">All levels</span> · <span class="text-rust">Structure + flexibility</span></p>
                     <ul class="space-y-3 mb-8 mono-text text-xs text-gray-400">
                         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>CUSTOM TRAINING & NUTRITION</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>WEEKLY VIDEO CALLS</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>24/7 DIRECT ACCESS</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>SUPPLEMENT PROTOCOLS</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>WEEKLY CHECK-IN CALL</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>FORM VIDEO FEEDBACK</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>24/7 SUPPORT</li>
                     </ul>
                     <div class="flex items-baseline gap-2 mb-6">
-                        <span class="display-text text-4xl text-rust">$499</span>
-                        <span class="mono-text text-xs text-gray-500">/MO</span>
+                        <span class="display-text text-4xl text-rust">$75</span>
+                        <span class="mono-text text-xs text-gray-500">/WK</span>
                     </div>
                     <a href="#contact" class="block w-full py-4 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors text-center">APPLY NOW</a>
                 </div>
                 <div class="program-reveal-card program-card">
-                    <div class="mono-text text-xs tracking-widest text-gray-500 mb-4">LIMITED</div>
-                    <h3 class="display-text text-3xl text-white mb-4 group-hover:text-rust transition-colors">VIP</h3>
+                    <div class="mono-text text-xs tracking-widest text-gray-500 mb-4">IN-PERSON</div>
+                    <h3 class="display-text text-3xl text-white mb-4 group-hover:text-rust transition-colors">ONSITE</h3>
                     <p class="text-gray-400 mb-4 text-sm leading-relaxed">
-                        The complete package. In-person sessions combined with full online coaching for maximum results.
+                        One focused in-person session per week plus your personalized program, nutrition guidance, meal plans, and ongoing support between sessions.
                     </p>
-                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-steel pl-3">WHO IT’S FOR · <span class="text-gray-400">Advanced / VIP</span> · <span class="text-rust">Max results + accountability</span></p>
+                    <p class="mono-text text-[10px] md:text-xs tracking-widest text-gray-500 mb-8 border-l border-steel pl-3">WHO IT’S FOR · <span class="text-gray-400">Hands-on coaching</span> · <span class="text-rust">Form + intensity</span></p>
                     <ul class="space-y-3 mb-8 mono-text text-xs text-gray-500">
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>4X MONTHLY IN-PERSON</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>TRAINING CAMP ACCESS</li>
-                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>PRIORITY SCHEDULING</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>1 SESSION / WEEK IN PERSON</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>PERSONALIZED PROGRAM</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-rust rounded-full"></span>NUTRITION & MEAL PLANS</li>
                     </ul>
                     <div class="flex items-baseline gap-2 mb-6">
-                        <span class="display-text text-4xl text-white">$899</span>
-                        <span class="mono-text text-xs text-gray-500">/MO</span>
+                        <span class="display-text text-4xl text-white">$120</span>
+                        <span class="mono-text text-xs text-gray-500">/SESSION</span>
                     </div>
                     <a href="#contact" class="block w-full py-4 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust hover:text-void transition-all text-center">INQUIRE</a>
                 </div>
@@ -459,6 +470,7 @@
     <script src="js/cms-defaults.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/cms-runtime.js"></script>
+    <script src="js/shared.js"></script>
     <script src="js/home.js"></script>
     <script type="module" src="js/programs-motion.js"></script>
 </body>

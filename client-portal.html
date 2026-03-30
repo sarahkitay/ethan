@@ -85,10 +85,13 @@
                 <div>
                     <label class="mono-text text-xs tracking-widest text-gray-500 mb-2 block">I'M INTERESTED IN</label>
                     <select id="apply-interest" class="dark-input bg-gunmetal border border-steel py-3 px-4 w-full">
-                        <option value="compete">COMPETE: HYROX prep ($299/mo)</option>
-                        <option value="elite">ELITE: Full coaching ($499/mo)</option>
-                        <option value="vip">VIP: In-person + online ($899/mo)</option>
-                        <option value="1on1">1-ON-1 COACHING: Custom sessions</option>
+                        <option value="template-fb3">Template: Full Body 3×/wk ($30)</option>
+                        <option value="template-fb2">Template: Full Body 2×/wk ($30)</option>
+                        <option value="template-ul4">Template: Upper/Lower 4×/wk ($30)</option>
+                        <option value="template-ppl5">Template: Upper/Lower + PPL 5×/wk ($30)</option>
+                        <option value="template-bundle">Bundle: All 4 programs ($100)</option>
+                        <option value="coaching-online">Online coaching ($75/wk)</option>
+                        <option value="coaching-inperson">In-person training ($120/session)</option>
                     </select>
                 </div>
                 <p id="apply-success" class="text-green-500 text-sm hidden">Application received. We'll be in touch to complete setup and payment.</p>
@@ -203,41 +206,52 @@
 
             <!-- Tab: Programs (purchase / 1-on-1) -->
             <div id="client-tab-programs" class="client-tab-panel hidden">
-                <p class="mono-text text-sm text-gray-500 mb-8">Choose a program or 1-on-1 coaching. Payment integration coming soon; your selection will be saved and we'll follow up.</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Compete -->
+                <p class="mono-text text-sm text-gray-500 mb-8">Choose a template or coaching tier. Payment integration coming soon; your selection is saved for follow-up.</p>
+                <p class="mono-text text-xs tracking-widest text-rust mb-4">PROGRAM TEMPLATES</p>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     <div class="program-card">
-                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">HYROX PREP</div>
-                        <h3 class="display-text text-xl text-white mb-2">COMPETE</h3>
-                        <p class="text-gray-500 text-sm mb-4">Sport-specific periodization, running & erg technique.</p>
-                        <p class="display-text text-2xl text-white mb-4">$299 <span class="mono-text text-xs text-gray-500">/MO</span></p>
-                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="compete">SELECT</button>
+                        <h3 class="display-text text-lg text-white mb-1">FULL BODY 3×</h3>
+                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-fb3">SELECT</button>
                     </div>
-                    <!-- Elite -->
-                    <div class="program-card border-rust bg-gunmetal">
-                        <div class="mono-text text-xs tracking-widest text-rust mb-2">MOST POPULAR</div>
-                        <h3 class="display-text text-xl text-white mb-2">ELITE</h3>
-                        <p class="text-gray-500 text-sm mb-4">Full coaching: training, nutrition, weekly calls.</p>
-                        <p class="display-text text-2xl text-rust mb-4">$499 <span class="mono-text text-xs text-gray-500">/MO</span></p>
-                        <button type="button" class="client-select-program w-full py-3 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors" data-program="elite">APPLY NOW</button>
-                    </div>
-                    <!-- VIP -->
                     <div class="program-card">
-                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">LIMITED</div>
-                        <h3 class="display-text text-xl text-white mb-2">VIP</h3>
-                        <p class="text-gray-500 text-sm mb-4">In-person + online. 4x monthly in-person, camp access.</p>
-                        <p class="display-text text-2xl text-white mb-4">$899 <span class="mono-text text-xs text-gray-500">/MO</span></p>
-                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="vip">INQUIRE</button>
+                        <h3 class="display-text text-lg text-white mb-1">FULL BODY 2×</h3>
+                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-fb2">SELECT</button>
                     </div>
-                    <!-- 1-on-1 -->
                     <div class="program-card">
-                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">CUSTOM</div>
-                        <h3 class="display-text text-xl text-white mb-2">1-ON-1 COACHING</h3>
-                        <p class="text-gray-500 text-sm mb-4">Work directly with Ethan. Sessions tailored to you.</p>
-                        <p class="mono-text text-xs text-gray-500 mb-4">Pricing on inquiry</p>
-                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="1on1">REQUEST SESSION</button>
+                        <h3 class="display-text text-lg text-white mb-1">UPPER/LOWER 4×</h3>
+                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-ul4">SELECT</button>
+                    </div>
+                    <div class="program-card">
+                        <h3 class="display-text text-lg text-white mb-1">UL + PPL 5×</h3>
+                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-ppl5">SELECT</button>
+                    </div>
+                    <div class="program-card border-rust bg-gunmetal sm:col-span-2 lg:col-span-3">
+                        <h3 class="display-text text-lg text-white mb-1">ALL FOUR TEMPLATES</h3>
+                        <p class="display-text text-xl text-rust mb-3">$100</p>
+                        <button type="button" class="client-select-program w-full py-3 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors" data-program="template-bundle">SELECT BUNDLE</button>
                     </div>
                 </div>
+                <p class="mono-text text-xs tracking-widest text-rust mb-4">COACHING</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="program-card border-rust/50">
+                        <div class="mono-text text-xs tracking-widest text-rust mb-2">MOST POPULAR</div>
+                        <h3 class="display-text text-xl text-white mb-2">ONLINE COACHING</h3>
+                        <p class="text-gray-500 text-sm mb-4">Personalized training & nutrition, weekly check-in, meal plans, form videos, 24/7 support.</p>
+                        <p class="display-text text-2xl text-rust mb-4">$75 <span class="mono-text text-xs text-gray-500">/WK</span></p>
+                        <button type="button" class="client-select-program w-full py-3 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors" data-program="coaching-online">APPLY</button>
+                    </div>
+                    <div class="program-card">
+                        <h3 class="display-text text-xl text-white mb-2">IN-PERSON</h3>
+                        <p class="text-gray-500 text-sm mb-4">1 session/week in person plus program, nutrition, and support between sessions.</p>
+                        <p class="display-text text-2xl text-white mb-4">$120 <span class="mono-text text-xs text-gray-500">/SESSION</span></p>
+                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="coaching-inperson">INQUIRE</button>
+                    </div>
+                </div>
+                <p class="mt-6"><a href="programs.html#program-templates" class="mono-text text-xs text-gray-500 hover:text-rust transition-colors">Full descriptions on Programs →</a></p>
                 <p id="client-program-interest-msg" class="mt-6 mono-text text-sm text-rust hidden">Interest saved. We'll reach out to complete payment and onboarding.</p>
             </div>
 

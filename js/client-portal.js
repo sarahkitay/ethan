@@ -26,11 +26,11 @@ const DEMO_CLIENT = {
 };
 
 const DEMO_PROGRAM = {
-    name: 'Elite Block 1',
-    type: 'ELITE',
+    name: 'Online Coaching',
+    type: 'ONLINE',
     startDate: '2024-01-15',
     endDate: '2024-04-15',
-    notes: 'Focus on HYROX build and body comp. Weekly check-in Fridays.',
+    notes: 'Weekly check-in Fridays. Training + nutrition personalized.',
     sessionsTotal: 12,
     sessionsUsed: 4
 };
