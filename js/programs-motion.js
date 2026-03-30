@@ -5,10 +5,12 @@
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobilePrograms = typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 768px)').matches;
 const easeOut = cubicBezier(0.33, 1, 0.68, 1);
 const easeSoft = cubicBezier(0.4, 0, 0.2, 1);
 
-if (prefersReducedMotion) {
+/* Mobile: scroll-linked opacity often never completes; sticky + clip hid cards. Show everything. */
+if (prefersReducedMotion || isMobilePrograms) {
   document.querySelectorAll('.program-reveal-card').forEach((el) => {
     el.style.opacity = '1';
     el.style.transform = 'scale(1)';

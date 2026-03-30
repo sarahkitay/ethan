@@ -170,13 +170,33 @@ body {
     margin-top: -8rem;
 }
 
-/* Less gap between About and Programs; sit above Programs overlap so button stays clickable */
+/* About above overlapping programs on desktop so the apply CTA stays clickable */
 #about {
     position: relative;
     z-index: 10001;
     min-height: auto;
     padding-bottom: 0;
     padding-top: 3rem;
+}
+
+@media (max-width: 768px) {
+    #about {
+        z-index: auto;
+        padding-bottom: 2.5rem;
+    }
+
+    .programs-scroll-section {
+        margin-top: 0;
+    }
+
+    .programs-section {
+        z-index: 10;
+    }
+
+    #about .text-center {
+        position: relative;
+        z-index: 2;
+    }
 }
 
 .programs-scroll-spacer {
@@ -217,6 +237,19 @@ body {
         padding: 5.75rem 0.35rem 1.25rem;
         min-height: auto;
         justify-content: flex-start;
+        overflow: visible;
+    }
+
+    /* Sticky + overflow:hidden clips the grid on small viewports */
+    .programs-section .program-reveal-card {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .programs-intro,
+    .programs-title {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
 
