@@ -204,8 +204,9 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* Small tail for Motion timeline — avoids a long black gap before Results */
     .programs-scroll-spacer {
-        min-height: 125vh;
+        min-height: max(26vh, 10rem);
     }
 }
 
@@ -239,18 +240,6 @@ body {
         justify-content: flex-start;
         overflow: visible;
     }
-
-    /* Sticky + overflow:hidden clips the grid on small viewports */
-    .programs-section .program-reveal-card {
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    .programs-intro,
-    .programs-title {
-        opacity: 1 !important;
-        transform: none !important;
-    }
 }
 
 .programs-hero {
@@ -261,7 +250,12 @@ body {
 
 @media (max-width: 768px) {
     .programs-hero {
-        padding-bottom: 0.35rem;
+        padding-bottom: 0;
+        margin-bottom: 1.75rem;
+    }
+
+    .programs-grid {
+        margin-top: 0.5rem;
     }
 }
 
