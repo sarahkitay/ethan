@@ -1,17 +1,11 @@
 /**
  * Programs section: scroll-driven reveal (Motion).
+ * Runs after window load + layout so section height / sticky + spacer are measured correctly.
  *
- * Desktop: long scroll through `.programs-scroll-section` (sticky inner + spacer).
- *   Intro/title use early segment of the scroll range; cards use full `start`→`end` with staggered keyframes.
- * Mobile: shorter offsets so the sequence finishes while the section is in view.
- *
- * One `scroll(animate(...))` per element; opacity + scale live in the same animate() for cards
- * so two scroll() drivers never overwrite each other.
+ * Desktop: shorter spacer (CSS) + tighter scroll offsets so title → cards happens with less scrolling.
+ * Cards use one scroll() per element; opacity + scale in the same animate() (no competing drivers).
  */
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
-
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isMobile = typeof window.matchMedia === 'function' && window.matchMedia('(max-width: 768px)').matches;
 
 const easeOut = cubicBezier(0.33, 1, 0.68, 1);
 const easeSoft = cubicBezier(0.4, 0, 0.2, 1);
@@ -31,13 +25,20 @@ function revealAll() {
   }
 }
 
-if (prefersReducedMotion) {
-  revealAll();
-} else {
+function setupProgramsScrollAnimations() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    revealAll();
+    return;
+  }
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
   const section = document.querySelector('.programs-scroll-section');
   const cards = document.querySelectorAll('.program-reveal-card');
   const intro = document.querySelector('.programs-intro');
   const title = document.querySelector('.programs-title');
+
+  if (!section) return;
 
   const titleYMob = '0.75rem';
   const titleYDesk = '1.5rem';
@@ -48,49 +49,50 @@ if (prefersReducedMotion) {
     cubicBezier(0.87, 0, 0.13, 1)
   ];
 
-  if (section) {
-    if (intro) {
-      if (isMobile) {
-        scroll(
-          animate(intro, { opacity: [0, 0, 1] }, {
-            times: [0, 0.08, 0.55],
-            easing: easeSoft
-          }),
-          { target: section, offset: ['start end', 'start start'] }
-        );
-      } else {
-        scroll(
-          animate(intro, { opacity: [0, 0, 1] }, {
-            times: [0, 0.15, 1],
-            easing: easeSoft
-          }),
-          { target: section, offset: ['start start', '0.3 end'] }
-        );
-      }
-    }
+  /* Scale starts slightly below 1 to avoid transform bugs with 0 */
+  const cardScaleFrom = 0.86;
 
-    if (title) {
-      if (isMobile) {
-        scroll(
-          animate(title, { opacity: [0, 0, 1], y: [titleYMob, titleYMob, '0rem'] }, {
-            times: [0, 0.1, 0.55],
-            easing: easeOut
-          }),
-          { target: section, offset: ['start end', 'start start'] }
-        );
-      } else {
-        scroll(
-          animate(title, { opacity: [0, 0, 1], y: [titleYDesk, titleYDesk, '0rem'] }, {
-            times: [0, 0.28, 1],
-            easing: easeOut
-          }),
-          { target: section, offset: ['start start', '0.42 end'] }
-        );
-      }
+  if (intro) {
+    if (isMobile) {
+      scroll(
+        animate(intro, { opacity: [0, 0, 1] }, {
+          times: [0, 0.08, 0.55],
+          easing: easeSoft
+        }),
+        { target: section, offset: ['start end', 'start start'] }
+      );
+    } else {
+      scroll(
+        animate(intro, { opacity: [0, 0, 1] }, {
+          times: [0, 0.12, 0.55],
+          easing: easeSoft
+        }),
+        { target: section, offset: ['start start', '0.18 end'] }
+      );
     }
   }
 
-  if (section && cards.length) {
+  if (title) {
+    if (isMobile) {
+      scroll(
+        animate(title, { opacity: [0, 0, 1], y: [titleYMob, titleYMob, '0rem'] }, {
+          times: [0, 0.1, 0.55],
+          easing: easeOut
+        }),
+        { target: section, offset: ['start end', 'start start'] }
+      );
+    } else {
+      scroll(
+        animate(title, { opacity: [0, 0, 1], y: [titleYDesk, titleYDesk, '0rem'] }, {
+          times: [0, 0.2, 0.58],
+          easing: easeOut
+        }),
+        { target: section, offset: ['start start', '0.26 end'] }
+      );
+    }
+  }
+
+  if (cards.length) {
     cards.forEach((card, index) => {
       if (isMobile) {
         const oEnd = Math.min(0.38, 0.2 + index * 0.06);
@@ -99,18 +101,18 @@ if (prefersReducedMotion) {
         const tEnd = Math.max(oEnd, sEnd);
 
         scroll(
-          animate(card, { opacity: [0, 0, 1], scale: [0, 0, 1] }, {
+          animate(card, { opacity: [0, 0, 1], scale: [cardScaleFrom, cardScaleFrom, 1] }, {
             times: [0, tMid, tEnd],
             easing: scaleEasings[index]
           }),
           { target: section, offset: ['start end', 'start start'] }
         );
       } else {
-        const mid = 0.5 + index * 0.06;
+        const mid = 0.22 + index * 0.05;
 
         scroll(
-          animate(card, { opacity: [0, 0, 1], scale: [0, 0, 1] }, {
-            times: [0, Math.min(0.75, mid), 1],
+          animate(card, { opacity: [0, 0, 1], scale: [cardScaleFrom, cardScaleFrom, 1] }, {
+            times: [0, Math.min(0.42, mid), 0.72],
             easing: cardEase
           }),
           { target: section, offset: ['start start', 'end end'] }
@@ -119,3 +121,14 @@ if (prefersReducedMotion) {
     });
   }
 }
+
+function scheduleProgramsMotion() {
+  const run = () => requestAnimationFrame(() => requestAnimationFrame(setupProgramsScrollAnimations));
+  if (document.readyState === 'complete') {
+    run();
+  } else {
+    window.addEventListener('load', run, { once: true });
+  }
+}
+
+scheduleProgramsMotion();

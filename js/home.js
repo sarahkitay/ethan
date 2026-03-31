@@ -112,34 +112,49 @@ if (container && typeof THREE !== 'undefined') {
     });
 }
 
-// Hero Animations
+// Hero Animations (only animate nodes that exist on this page)
 const heroTl = gsap.timeline({ delay: 0.5 });
+const heroLabel = document.getElementById('hero-label');
+const heroSpans = document.querySelectorAll('.hero-content .reveal-text span');
+const heroSub = document.getElementById('hero-sub');
+const heroCta = document.getElementById('hero-cta');
 
-heroTl.to('#hero-label', {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: 'power3.out'
-})
-.to('.reveal-text span', {
-    y: 0,
-    opacity: 1,
-    duration: 1.2,
-    stagger: 0.1,
-    ease: 'expo.out'
-}, '-=0.5')
-.to('#hero-sub', {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: 'power3.out'
-}, '-=0.8')
-.to('#hero-cta', {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: 'power3.out'
-}, '-=0.6');
+if (heroLabel) {
+    gsap.set(heroLabel, { y: 24 });
+    heroTl.to(heroLabel, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out'
+    });
+}
+if (heroSpans.length) {
+    heroTl.to(heroSpans, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: 'expo.out'
+    }, heroLabel ? '-=0.5' : 0);
+}
+if (heroSub) {
+    gsap.set(heroSub, { y: 20 });
+    heroTl.to(heroSub, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out'
+    }, '-=0.8');
+}
+if (heroCta) {
+    gsap.set(heroCta, { y: 20 });
+    heroTl.to(heroCta, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out'
+    }, '-=0.6');
+}
 
 // Programs scroll reveal: Motion in js/programs-motion.js (desktop + mobile).
 

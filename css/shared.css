@@ -6,6 +6,8 @@
 
 html {
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
@@ -14,6 +16,11 @@ body {
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     cursor: auto;
+}
+
+/* Notch / home indicator on phones */
+nav.fixed.top-0 {
+    padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
 }
 
 :root {
@@ -201,14 +208,15 @@ body {
     }
 }
 
+/* Desktop: less vertical scroll from PROGRAMS headline → three cards (was 220vh). */
 .programs-scroll-spacer {
-    min-height: 220vh;
+    min-height: 115vh;
 }
 
 @media (max-width: 768px) {
-    /* Small tail for Motion timeline — avoids a long black gap before Results */
+    /* Enough range for Motion; still short vs old desktop spacer */
     .programs-scroll-spacer {
-        min-height: max(26vh, 10rem);
+        min-height: max(32vh, 11rem);
     }
 }
 
@@ -296,9 +304,11 @@ body {
     }
 }
 
+/* Home programs: always one row × three columns (no wrap to stacked cards). */
 .programs-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: row;
     gap: clamp(1rem, 4vw, 2.5rem);
     max-width: 1400px;
     width: 100%;
@@ -306,6 +316,7 @@ body {
     padding: 0 1rem;
     position: relative;
     z-index: 3;
+    align-items: stretch;
 }
 
 @media (max-width: 1024px) {
@@ -325,7 +336,8 @@ body {
 
 .program-reveal-card {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.86);
+    min-width: 0;
 }
 
 /* Bottom CTA bar - shows on scroll */
