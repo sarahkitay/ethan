@@ -34,14 +34,19 @@ if (prefersReducedMotion) {
   const intro = document.querySelector('.programs-intro');
   const title = document.querySelector('.programs-title');
 
-  const introTimes = isMobile ? [0, 0.12, 1] : [0, 0.2, 1];
-  const titleTimes = isMobile ? [0, 0.18, 1] : [0, 0.35, 1];
+  const introTimes = isMobile ? [0, 0.08, 0.55] : [0, 0.2, 1];
+  const titleTimes = isMobile ? [0, 0.1, 0.55] : [0, 0.35, 1];
   const titleY = isMobile ? '0.75rem' : '1.5rem';
 
   /* Headline: fade in as section rises from bottom until top aligns (pins) */
   const heroScrollOffset = ['start end', 'start start'];
-  /* Cards: same direction (fade in on scroll down) over the full section pass */
-  const cardsScrollOffset = ['start end', 'end start'];
+  /*
+   * Desktop: cards animate across full section (enter → leave viewport).
+   * Mobile: same short band as hero so opacity/scale finish while sticky row is still on screen.
+   */
+  const cardsScrollOffset = isMobile
+    ? ['start end', 'start start']
+    : ['start end', 'end start'];
 
   if (section) {
     if (intro) {
@@ -71,13 +76,23 @@ if (prefersReducedMotion) {
       cubicBezier(0.87, 0, 0.13, 1)
     ];
 
-    const baseOpacityMid = isMobile ? 0.28 : 0.42;
-    const baseScaleMid = isMobile ? 0.2 : 0.32;
-    const stagger = isMobile ? 0.07 : 0.09;
+    const baseOpacityMid = 0.42;
+    const baseScaleMid = 0.32;
+    const stagger = 0.09;
 
     cards.forEach((card, index) => {
-      const opacityTimes = [0, Math.min(0.85, baseOpacityMid + index * stagger), 1];
-      const scaleTimes = [0, Math.min(0.75, baseScaleMid + index * stagger), 1];
+      let opacityTimes;
+      let scaleTimes;
+      if (isMobile) {
+        /* Finish ramp by ~22–34% of scroll segment (fast in; all visible before pin completes) */
+        const oEnd = Math.min(0.38, 0.2 + index * 0.06);
+        const sEnd = Math.min(0.34, 0.16 + index * 0.05);
+        opacityTimes = [0, Math.max(0.02, oEnd * 0.2), oEnd];
+        scaleTimes = [0, Math.max(0.02, sEnd * 0.22), sEnd];
+      } else {
+        opacityTimes = [0, Math.min(0.85, baseOpacityMid + index * stagger), 1];
+        scaleTimes = [0, Math.min(0.75, baseScaleMid + index * stagger), 1];
+      }
 
       scroll(
         animate(card, { opacity: [0, 0, 1] }, {
