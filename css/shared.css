@@ -192,8 +192,7 @@ body {
 }
 
 .programs-scroll-content {
-    min-height: 100vh;
-    min-height: 100svh;
+    /* No min-height: full-viewport min was leaving dead space; stack hugs the top */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -201,7 +200,7 @@ body {
     justify-content: flex-start;
     position: sticky;
     top: 0;
-    padding: 10.5rem 1.5rem 4rem;
+    padding: 8.5rem 1.5rem 3rem;
     /* Don’t clip the pricing grid — overflow hidden caused void “bars” / black flashes */
     overflow-x: hidden;
     overflow-y: visible;
@@ -212,7 +211,8 @@ body {
 .programs-hero {
     text-align: center;
     margin-bottom: 0;
-    padding-bottom: 1.75rem;
+    padding-bottom: 0.35rem;
+    flex-shrink: 0;
 }
 
 .programs-intro {
@@ -221,8 +221,9 @@ body {
 }
 
 .programs-title {
-    font-size: clamp(4rem, 18vw, 14rem);
-    line-height: 0.85;
+    /* Keep headline strong without a giant invisible layout box (was 18vw / 14rem) */
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
+    line-height: 0.92;
     margin: 0;
     color: #e5e5e5;
     opacity: 0;
@@ -243,8 +244,9 @@ body {
     gap: clamp(1rem, 4vw, 2.5rem);
     max-width: 1400px;
     width: 100%;
-    margin: 0 auto;
+    margin: -0.5rem auto 0;
     padding: 0 1rem;
+    flex-shrink: 0;
 }
 
 /* Results: seamless handoff after programs (same base tone, slight overlap) */
@@ -272,18 +274,22 @@ body {
     }
 
     .programs-scroll-content {
-        padding: 5rem 0.5rem 3rem;
+        padding: 4.5rem 0.5rem 2.5rem;
         overflow-x: hidden;
         overflow-y: visible;
     }
 
     .programs-hero {
-        padding-bottom: 0.75rem;
+        padding-bottom: 0.25rem;
     }
 
     .programs-title {
-        font-size: clamp(2rem, 11vw, 3.75rem);
-        line-height: 0.88;
+        font-size: clamp(1.85rem, 9vw, 2.75rem);
+        line-height: 0.92;
+    }
+
+    .programs-grid {
+        margin-top: -0.25rem;
     }
 
     .programs-section .program-reveal-card.program-card:hover {
