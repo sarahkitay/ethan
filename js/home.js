@@ -314,28 +314,6 @@ if (bottomCta) {
     toggleBottomCta();
 }
 
-// --- Nutrition promo popup: show only after scrolling through full page ---
-const nutritionPromoPopup = document.getElementById('nutrition-promo-popup');
-
-function checkNutritionPromo() {
-    if (!nutritionPromoPopup || sessionStorage.getItem('nutrition_promo_seen')) return;
-    const scrollBottom = window.scrollY + window.innerHeight;
-    const pageBottom = document.documentElement.scrollHeight - 80;
-    if (scrollBottom >= pageBottom) {
-        nutritionPromoPopup.classList.remove('hidden');
-    }
-}
-window.addEventListener('scroll', checkNutritionPromo, { passive: true });
-window.addEventListener('load', checkNutritionPromo);
-
-document.getElementById('nutrition-promo-close')?.addEventListener('click', () => {
-    nutritionPromoPopup?.classList.add('hidden');
-    sessionStorage.setItem('nutrition_promo_seen', '1');
-});
-document.getElementById('nutrition-promo-btn')?.addEventListener('click', () => {
-    sessionStorage.setItem('nutrition_promo_seen', '1');
-});
-
 // Contact / intake form: save to localStorage for admin to view
 const INTAKE_FORMS_KEY = 'ethan_cope_intake_forms';
 const contactForm = document.getElementById('contact-form');
