@@ -44,6 +44,22 @@ body {
 
 .border-steel { border-color: var(--cms-steel) !important; }
 
+/* Mobile menu: solid void (no translucent / blur so content doesn’t show through) */
+#mobile-nav-panel {
+    background-color: var(--cms-void) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+@media (max-width: 767px) {
+    nav:has(#mobile-nav-panel:not(.hidden)) {
+        background-color: var(--cms-void) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        mix-blend-mode: normal !important;
+    }
+}
+
 /* Noise Texture */
 .noise {
     position: fixed;
@@ -163,7 +179,8 @@ body {
 .programs-scroll-section {
     position: relative;
     z-index: 10;
-    margin-top: -8rem;
+    /* Breathing room above Programs (was -8rem overlap) */
+    margin-top: clamp(1.5rem, 4vw, 3.5rem);
     background-color: #0a0a0a;
     /* Keep programs visually continuous into results — no empty gutter */
     margin-bottom: 0;
@@ -192,7 +209,6 @@ body {
 }
 
 .programs-scroll-content {
-    /* No min-height: full-viewport min was leaving dead space; stack hugs the top */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -200,7 +216,7 @@ body {
     justify-content: flex-start;
     position: sticky;
     top: 0;
-    padding: 8.5rem 1.5rem 3rem;
+    padding: clamp(9rem, 14vh, 11.5rem) 1.5rem 3rem;
     /* Don’t clip the pricing grid — overflow hidden caused void “bars” / black flashes */
     overflow-x: hidden;
     overflow-y: visible;
@@ -211,8 +227,12 @@ body {
 .programs-hero {
     text-align: center;
     margin-bottom: 0;
-    padding-bottom: 0.35rem;
+    padding-bottom: clamp(0.75rem, 2vh, 1.75rem);
     flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    z-index: 0;
 }
 
 .programs-intro {
@@ -221,13 +241,13 @@ body {
 }
 
 .programs-title {
-    /* Keep headline strong without a giant invisible layout box (was 18vw / 14rem) */
-    font-size: clamp(2.75rem, 6vw, 5.25rem);
-    line-height: 0.92;
+    font-size: clamp(4rem, 18vw, 14rem);
+    line-height: 0.85;
     margin: 0;
     color: #e5e5e5;
     opacity: 0;
     will-change: opacity, transform;
+    transform-origin: center top;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -244,9 +264,12 @@ body {
     gap: clamp(1rem, 4vw, 2.5rem);
     max-width: 1400px;
     width: 100%;
-    margin: -0.5rem auto 0;
+    /* Pull grid toward headline so cards feel like they replace the word */
+    margin: clamp(-4.5rem, -9vh, -2rem) auto 0;
     padding: 0 1rem;
     flex-shrink: 0;
+    position: relative;
+    z-index: 2;
 }
 
 /* Results: seamless handoff after programs (same base tone, slight overlap) */
@@ -274,22 +297,22 @@ body {
     }
 
     .programs-scroll-content {
-        padding: 4.5rem 0.5rem 2.5rem;
+        padding: clamp(4.75rem, 12vw, 6rem) 0.5rem 2.5rem;
         overflow-x: hidden;
         overflow-y: visible;
     }
 
     .programs-hero {
-        padding-bottom: 0.25rem;
+        padding-bottom: 0.5rem;
     }
 
     .programs-title {
-        font-size: clamp(1.85rem, 9vw, 2.75rem);
-        line-height: 0.92;
+        font-size: clamp(2.25rem, 14vw, 4.25rem);
+        line-height: 0.88;
     }
 
     .programs-grid {
-        margin-top: -0.25rem;
+        margin-top: clamp(-2rem, -5vh, -0.75rem);
     }
 
     .programs-section .program-reveal-card.program-card:hover {

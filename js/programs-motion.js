@@ -1,6 +1,6 @@
 /**
  * Programs section: scroll-driven reveal (Motion).
- * Order: intro → "PROGRAMS" title (readable + hold) → cards one-by-one.
+ * Order: intro → huge "PROGRAMS" (hold) → title fades/scales away as cards replace it → cards one-by-one.
  * Each card reaches full opacity + scale within its own scroll window before the next card starts.
  */
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
@@ -32,10 +32,15 @@ if (prefersReducedMotion) {
   const INTRO_END = 0.09;
   const TITLE_START = 0.065;
   const TITLE_END = 0.235;
-  /** First pricing card begins when title phase ends — right after "PROGRAMS" has finished its hold. */
-  const CARDS_START = TITLE_END;
   const CARD_SEGMENT = 0.048;
   const CARD_GAP = 0.0065;
+  /** First pricing card begins as the title starts handing off (overlap = “replace” moment). */
+  const CARDS_START = TITLE_END;
+  /** Title scroll track ends partway into card reveals so it can fade out over the first cards. */
+  const TITLE_OUT_END = Math.min(
+    CARDS_START + CARD_SEGMENT * 3.5 + CARD_GAP * 2.5,
+    0.46
+  );
 
   const scaleEasings = [
     cubicBezier(0.42, 0, 0.58, 1),
@@ -60,14 +65,21 @@ if (prefersReducedMotion) {
     if (title) {
       scroll(
         /**
-         * "PROGRAMS": fades in early in this window, then holds at full opacity until window end
-         * so cards only start after the word is clearly on screen.
+         * "PROGRAMS": fade in + settle, hold at full size, then fade/shrink while cards take over.
          */
-        animate(title, { opacity: [0, 0, 1], y: ['1.5rem', '1.5rem', '0rem'] }, {
-          times: [0, 0.14, 0.5],
-          easing: easeOut
-        }),
-        { target: section, offset: [`${TITLE_START} end`, `${TITLE_END} end`] }
+        animate(
+          title,
+          {
+            opacity: [0, 0, 1, 1, 0],
+            y: ['2rem', '2rem', '0rem', '0rem', '-1.25rem'],
+            scale: [0.96, 0.96, 1, 1, 0.82]
+          },
+          {
+            times: [0, 0.1, 0.34, 0.5, 1],
+            easing: easeSoft
+          }
+        ),
+        { target: section, offset: [`${TITLE_START} end`, `${TITLE_OUT_END} end`] }
       );
     }
   }
