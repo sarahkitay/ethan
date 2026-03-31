@@ -176,7 +176,7 @@ body {
 }
 
 .programs-scroll-spacer {
-    min-height: 220vh;
+    min-height: 280vh;
 }
 
 .programs-scroll-content {
@@ -232,7 +232,7 @@ body {
 
 @media (max-width: 900px) {
     .programs-scroll-spacer {
-        min-height: 320vh;
+        min-height: 420vh;
     }
 
     /* Stack pricing cards; desktop keeps 3-column grid */
