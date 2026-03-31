@@ -164,6 +164,9 @@ body {
     position: relative;
     z-index: 10;
     margin-top: -8rem;
+    background-color: #0a0a0a;
+    /* Keep programs visually continuous into results — no empty gutter */
+    margin-bottom: 0;
 }
 
 /* Less gap between About and Programs; sit above Programs overlap so button stays clickable */
@@ -177,10 +180,20 @@ body {
 
 .programs-scroll-spacer {
     min-height: 280vh;
+    /* Bridge void → results palette while spacer scrolls (avoids flat “black hole”) */
+    background: linear-gradient(
+        180deg,
+        #0a0a0a 0%,
+        #0a0a0a 22%,
+        #0e0e0e 55%,
+        #121212 78%,
+        #141414 100%
+    );
 }
 
 .programs-scroll-content {
     min-height: 100vh;
+    min-height: 100svh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -189,7 +202,11 @@ body {
     position: sticky;
     top: 0;
     padding: 15.5rem 1.5rem 4rem;
-    overflow: hidden;
+    /* Don’t clip the pricing grid — overflow hidden caused void “bars” / black flashes */
+    overflow-x: hidden;
+    overflow-y: visible;
+    box-sizing: border-box;
+    background-color: #0a0a0a;
 }
 
 .programs-hero {
@@ -230,6 +247,17 @@ body {
     padding: 0 1rem;
 }
 
+/* Results: seamless handoff after programs (same base tone, slight overlap) */
+#results {
+    margin-top: max(-12vh, -8rem);
+    padding-top: max(12vh, 8rem);
+    background-color: #0a0a0a;
+}
+
+#results .screen-section {
+    margin-top: 0;
+}
+
 @media (max-width: 900px) {
     .programs-scroll-spacer {
         min-height: 420vh;
@@ -246,6 +274,7 @@ body {
     .programs-scroll-content {
         padding: 6.75rem 0.5rem 3rem;
         overflow-x: hidden;
+        overflow-y: visible;
     }
 
     .programs-hero {
