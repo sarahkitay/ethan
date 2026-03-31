@@ -1,8 +1,8 @@
 /**
  * Programs section: scroll-driven reveal (Motion).
- * Offsets: progress 0 when the section enters from below ("start end"), 1 when it has
- * moved through the viewport — so opacity/scales fade IN while scrolling down.
- * (Using "start start" as the first offset inverts progress with sticky + tall sections.)
+ * Desktop: classic sticky-scroll — progress from section top aligning with viewport through scroll depth
+ *   (intro → title → cards stagger), matching the original site behavior.
+ * Mobile: shorter offsets + compressed keyframes so cards finish in view (sticky row + small spacer).
  */
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
 
@@ -34,81 +34,99 @@ if (prefersReducedMotion) {
   const intro = document.querySelector('.programs-intro');
   const title = document.querySelector('.programs-title');
 
-  const introTimes = isMobile ? [0, 0.08, 0.55] : [0, 0.2, 1];
-  const titleTimes = isMobile ? [0, 0.1, 0.55] : [0, 0.35, 1];
-  const titleY = isMobile ? '0.75rem' : '1.5rem';
+  const titleYMob = '0.75rem';
+  const titleYDesk = '1.5rem';
 
-  /* Headline: fade in as section rises from bottom until top aligns (pins) */
-  const heroScrollOffset = ['start end', 'start start'];
-  /*
-   * Desktop: cards animate across full section (enter → leave viewport).
-   * Mobile: same short band as hero so opacity/scale finish while sticky row is still on screen.
-   */
-  const cardsScrollOffset = isMobile
-    ? ['start end', 'start start']
-    : ['start end', 'end start'];
+  const scaleEasings = [
+    cubicBezier(0.42, 0, 0.58, 1),
+    cubicBezier(0.76, 0, 0.24, 1),
+    cubicBezier(0.87, 0, 0.13, 1)
+  ];
 
   if (section) {
     if (intro) {
-      scroll(
-        animate(intro, { opacity: [0, 0, 1] }, {
-          times: introTimes,
-          easing: easeSoft
-        }),
-        { target: section, offset: heroScrollOffset }
-      );
+      if (isMobile) {
+        scroll(
+          animate(intro, { opacity: [0, 0, 1] }, {
+            times: [0, 0.08, 0.55],
+            easing: easeSoft
+          }),
+          { target: section, offset: ['start end', 'start start'] }
+        );
+      } else {
+        scroll(
+          animate(intro, { opacity: [0, 0, 1] }, {
+            times: [0, 0.15, 1],
+            easing: easeSoft
+          }),
+          { target: section, offset: ['start start', '0.3 end'] }
+        );
+      }
     }
+
     if (title) {
-      scroll(
-        animate(title, { opacity: [0, 0, 1], y: [titleY, titleY, '0rem'] }, {
-          times: titleTimes,
-          easing: easeOut
-        }),
-        { target: section, offset: heroScrollOffset }
-      );
+      if (isMobile) {
+        scroll(
+          animate(title, { opacity: [0, 0, 1], y: [titleYMob, titleYMob, '0rem'] }, {
+            times: [0, 0.1, 0.55],
+            easing: easeOut
+          }),
+          { target: section, offset: ['start end', 'start start'] }
+        );
+      } else {
+        scroll(
+          animate(title, { opacity: [0, 0, 1], y: [titleYDesk, titleYDesk, '0rem'] }, {
+            times: [0, 0.28, 1],
+            easing: easeOut
+          }),
+          { target: section, offset: ['start start', '0.42 end'] }
+        );
+      }
     }
   }
 
   if (section && cards.length) {
-    const scaleEasings = [
-      cubicBezier(0.42, 0, 0.58, 1),
-      cubicBezier(0.76, 0, 0.24, 1),
-      cubicBezier(0.87, 0, 0.13, 1)
-    ];
-
-    const baseOpacityMid = 0.42;
-    const baseScaleMid = 0.32;
-    const stagger = 0.09;
-
     cards.forEach((card, index) => {
-      let opacityTimes;
-      let scaleTimes;
       if (isMobile) {
-        /* Finish ramp by ~22–34% of scroll segment (fast in; all visible before pin completes) */
         const oEnd = Math.min(0.38, 0.2 + index * 0.06);
         const sEnd = Math.min(0.34, 0.16 + index * 0.05);
-        opacityTimes = [0, Math.max(0.02, oEnd * 0.2), oEnd];
-        scaleTimes = [0, Math.max(0.02, sEnd * 0.22), sEnd];
+        const opacityTimes = [0, Math.max(0.02, oEnd * 0.2), oEnd];
+        const scaleTimes = [0, Math.max(0.02, sEnd * 0.22), sEnd];
+
+        scroll(
+          animate(card, { opacity: [0, 0, 1] }, {
+            times: opacityTimes,
+            easing: cubicBezier(0.61, 1, 0.88, 1)
+          }),
+          { target: section, offset: ['start end', 'start start'] }
+        );
+
+        scroll(
+          animate(card, { scale: [0, 0, 1] }, {
+            times: scaleTimes,
+            easing: scaleEasings[index]
+          }),
+          { target: section, offset: ['start end', 'start start'] }
+        );
       } else {
-        opacityTimes = [0, Math.min(0.85, baseOpacityMid + index * stagger), 1];
-        scaleTimes = [0, Math.min(0.75, baseScaleMid + index * stagger), 1];
+        const endOffset = `${1 - index * 0.05} end`;
+
+        scroll(
+          animate(card, { opacity: [0, 0, 1] }, {
+            times: [0, 0.55, 1],
+            easing: cubicBezier(0.61, 1, 0.88, 1)
+          }),
+          { target: section, offset: ['start start', endOffset] }
+        );
+
+        scroll(
+          animate(card, { scale: [0, 0, 1] }, {
+            times: [0, 0.3, 1],
+            easing: scaleEasings[index]
+          }),
+          { target: section, offset: ['start start', endOffset] }
+        );
       }
-
-      scroll(
-        animate(card, { opacity: [0, 0, 1] }, {
-          times: opacityTimes,
-          easing: cubicBezier(0.61, 1, 0.88, 1)
-        }),
-        { target: section, offset: cardsScrollOffset }
-      );
-
-      scroll(
-        animate(card, { scale: [0, 0, 1] }, {
-          times: scaleTimes,
-          easing: scaleEasings[index]
-        }),
-        { target: section, offset: cardsScrollOffset }
-      );
     });
   }
 }
