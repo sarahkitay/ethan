@@ -163,14 +163,19 @@ body {
     }
 }
 
-/* Programs scroll section - sticky + reveal */
+/* Programs scroll section - sticky + reveal; high z-index desktop-only (above #about overlap) */
 .programs-scroll-section {
     position: relative;
-    z-index: 10;
     margin-top: -8rem;
 }
 
-/* About above overlapping programs on desktop so the apply CTA stays clickable */
+@media (min-width: 769px) {
+    .programs-scroll-section {
+        z-index: 10050;
+    }
+}
+
+/* About: below programs stack so sticky cards aren’t a “black hole” under overlap */
 #about {
     position: relative;
     z-index: 10001;
@@ -187,9 +192,6 @@ body {
 
     .programs-scroll-section {
         margin-top: 0;
-    }
-
-    .programs-section {
         z-index: 10;
     }
 
@@ -219,6 +221,7 @@ body {
     justify-content: flex-start;
     position: sticky;
     top: 0;
+    z-index: 2;
     padding: 15.5rem 1.5rem 4rem;
     overflow: hidden;
 }
@@ -286,6 +289,11 @@ body {
         opacity: 1;
         transform: none;
     }
+
+    .program-reveal-card {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .programs-grid {
@@ -296,6 +304,8 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 0 1rem;
+    position: relative;
+    z-index: 3;
 }
 
 @media (max-width: 1024px) {
@@ -361,9 +371,14 @@ body {
     color: #83B1F3;
 }
 
-/* Programs section: above fixed noise/WebGL so cards stay visible; below #about so CTA button isn’t covered */
-.programs-section {
-    z-index: 9999;
+.programs-section .program-reveal-card.program-card {
+    position: relative;
+    z-index: 4;
+}
+
+/* Home: keep nav above sticky programs band */
+body[data-page="home"] nav {
+    z-index: 10100;
 }
 
 /* Nutrition calculator: full-screen, lighter background on scroll */

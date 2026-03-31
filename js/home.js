@@ -141,6 +141,75 @@ heroTl.to('#hero-label', {
     ease: 'power3.out'
 }, '-=0.6');
 
+// Programs strip (desktop): scroll-scrubbed intro → title → cards, headline fades as cards take over.
+// Motion (programs-motion.js) handles mobile only so we don’t double-drive the same nodes.
+(function initProgramsScrollDesktop() {
+    if (document.body.dataset.page !== 'home') return;
+    const progSection = document.querySelector('.programs-scroll-section');
+    if (!progSection) return;
+
+    const intro = progSection.querySelector('.programs-intro');
+    const title = progSection.querySelector('.programs-title');
+    const cards = progSection.querySelectorAll('.program-reveal-card');
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (intro) gsap.set(intro, { opacity: 1, y: 0, clearProps: 'transform' });
+        if (title) gsap.set(title, { opacity: 1, y: 0, clearProps: 'transform' });
+        if (cards.length) gsap.set(cards, { opacity: 1, scale: 1 });
+        return;
+    }
+
+    gsap.matchMedia().add('(min-width: 769px)', () => {
+        if (intro) gsap.set(intro, { opacity: 0 });
+        if (title) gsap.set(title, { opacity: 0, y: 32 });
+        if (cards.length) gsap.set(cards, { opacity: 0, scale: 0.9 });
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: progSection,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.45,
+                invalidateOnRefresh: true
+            }
+        });
+
+        if (intro) {
+            tl.fromTo(intro, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'none' }, 0);
+        }
+        if (title) {
+            tl.fromTo(
+                title,
+                { opacity: 0, y: 32 },
+                { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' },
+                0.12
+            );
+            tl.to(title, { opacity: 0, y: -40, duration: 0.24, ease: 'power2.in' }, 0.72);
+        }
+        if (intro) {
+            tl.to(intro, { opacity: 0, y: -20, duration: 0.2, ease: 'power2.in' }, 0.7);
+        }
+        if (cards.length) {
+            tl.fromTo(
+                cards,
+                { opacity: 0, scale: 0.9 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.4,
+                    stagger: 0.06,
+                    ease: 'power2.out'
+                },
+                0.42
+            );
+        }
+
+        return () => {
+            tl.kill();
+        };
+    });
+})();
+
 // Scroll Triggers (exclude .program-card so all three cards stay visible)
 gsap.utils.toArray('.screen-section').forEach(section => {
     const targets = section.querySelectorAll('.section-marker, h2, p, .stat-item');
