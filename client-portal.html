@@ -2,8 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Portal | Ethan Cope</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,7 +89,7 @@
                         <option value="template-fb2">Template: Full Body 2×/wk ($30)</option>
                         <option value="template-ul4">Template: Upper/Lower 4×/wk ($30)</option>
                         <option value="template-ppl5">Template: Upper/Lower + PPL 5×/wk ($30)</option>
-                        <option value="template-bundle">Bundle: All 4 programs ($100)</option>
+                        <option value="bundle-all4">Bundle: All 4 programs ($100)</option>
                         <option value="coaching-online">Online coaching ($75/wk)</option>
                         <option value="coaching-inperson">In-person training ($120/session)</option>
                     </select>
@@ -207,52 +206,58 @@
 
             <!-- Tab: Programs (purchase / 1-on-1) -->
             <div id="client-tab-programs" class="client-tab-panel hidden">
-                <p class="mono-text text-sm text-gray-500 mb-8">Choose a template or coaching tier. Payment integration coming soon; your selection is saved for follow-up.</p>
-                <p class="mono-text text-xs tracking-widest text-rust mb-4">PROGRAM TEMPLATES</p>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <p class="mono-text text-sm text-gray-500 mb-8">Program templates, bundle, or coaching. Payment integration coming soon; your selection is saved and we’ll follow up.</p>
+                <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
                     <div class="program-card">
-                        <h3 class="display-text text-lg text-white mb-1">FULL BODY 3×</h3>
-                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">TEMPLATE</div>
+                        <h3 class="display-text text-lg text-white mb-2">FULL BODY 3× / WK</h3>
+                        <p class="text-gray-500 text-sm mb-4">Weekly full-body split with substitutions for any setup.</p>
+                        <p class="display-text text-xl text-white mb-4">$30</p>
                         <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-fb3">SELECT</button>
                     </div>
                     <div class="program-card">
-                        <h3 class="display-text text-lg text-white mb-1">FULL BODY 2×</h3>
-                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">TEMPLATE</div>
+                        <h3 class="display-text text-lg text-white mb-2">FULL BODY 2× / WK</h3>
+                        <p class="text-gray-500 text-sm mb-4">Minimal days, full prescription and substitutions.</p>
+                        <p class="display-text text-xl text-white mb-4">$30</p>
                         <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-fb2">SELECT</button>
                     </div>
                     <div class="program-card">
-                        <h3 class="display-text text-lg text-white mb-1">UPPER/LOWER 4×</h3>
-                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">TEMPLATE</div>
+                        <h3 class="display-text text-lg text-white mb-2">UPPER / LOWER 4×</h3>
+                        <p class="text-gray-500 text-sm mb-4">Upper, lower, rest pattern; gym or home options.</p>
+                        <p class="display-text text-xl text-white mb-4">$30</p>
                         <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-ul4">SELECT</button>
                     </div>
                     <div class="program-card">
-                        <h3 class="display-text text-lg text-white mb-1">UL + PPL 5×</h3>
-                        <p class="display-text text-xl text-rust mb-3">$30</p>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">TEMPLATE</div>
+                        <h3 class="display-text text-lg text-white mb-2">UPPER / LOWER + PPL 5×</h3>
+                        <p class="text-gray-500 text-sm mb-4">High-frequency gym plan with flexible ordering.</p>
+                        <p class="display-text text-xl text-white mb-4">$30</p>
                         <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="template-ppl5">SELECT</button>
                     </div>
-                    <div class="program-card border-rust bg-gunmetal sm:col-span-2 lg:col-span-3">
-                        <h3 class="display-text text-lg text-white mb-1">ALL FOUR TEMPLATES</h3>
-                        <p class="display-text text-xl text-rust mb-3">$100</p>
-                        <button type="button" class="client-select-program w-full py-3 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors" data-program="template-bundle">SELECT BUNDLE</button>
-                    </div>
-                </div>
-                <p class="mono-text text-xs tracking-widest text-rust mb-4">COACHING</p>
-                <div class="grid md:grid-cols-2 gap-6">
                     <div class="program-card border-rust/50">
+                        <div class="mono-text text-xs tracking-widest text-rust mb-2">BUNDLE</div>
+                        <h3 class="display-text text-lg text-white mb-2">ALL 4 PROGRAMS</h3>
+                        <p class="text-gray-500 text-sm mb-4">Every template in one purchase.</p>
+                        <p class="display-text text-xl text-white mb-4">$100</p>
+                        <button type="button" class="client-select-program w-full py-3 border border-rust text-rust mono-text text-xs tracking-widest hover:bg-rust hover:text-void transition-colors" data-program="bundle-all4">GET BUNDLE</button>
+                    </div>
+                    <div class="program-card border-rust bg-gunmetal">
                         <div class="mono-text text-xs tracking-widest text-rust mb-2">MOST POPULAR</div>
-                        <h3 class="display-text text-xl text-white mb-2">ONLINE COACHING</h3>
-                        <p class="text-gray-500 text-sm mb-4">Personalized training & nutrition, weekly check-in, meal plans, form videos, 24/7 support.</p>
-                        <p class="display-text text-2xl text-rust mb-4">$75 <span class="mono-text text-xs text-gray-500">/WK</span></p>
+                        <h3 class="display-text text-lg text-white mb-2">ONLINE COACHING</h3>
+                        <p class="text-gray-400 text-sm mb-4">Full system: training, nutrition, weekly check-in, form feedback, 24/7 support.</p>
+                        <p class="display-text text-xl text-rust mb-4">$75 <span class="mono-text text-xs text-gray-500">/ WK</span></p>
                         <button type="button" class="client-select-program w-full py-3 bg-rust text-void font-bold mono-text text-xs tracking-widest hover:bg-amber transition-colors" data-program="coaching-online">APPLY</button>
                     </div>
                     <div class="program-card">
-                        <h3 class="display-text text-xl text-white mb-2">IN-PERSON</h3>
-                        <p class="text-gray-500 text-sm mb-4">1 session/week in person plus program, nutrition, and support between sessions.</p>
-                        <p class="display-text text-2xl text-white mb-4">$120 <span class="mono-text text-xs text-gray-500">/SESSION</span></p>
-                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="coaching-inperson">INQUIRE</button>
+                        <div class="mono-text text-xs tracking-widest text-gray-500 mb-2">COACHING</div>
+                        <h3 class="display-text text-lg text-white mb-2">IN-PERSON</h3>
+                        <p class="text-gray-500 text-sm mb-4">Weekly in-person session plus program & nutrition support.</p>
+                        <p class="display-text text-xl text-white mb-4">$120 <span class="mono-text text-xs text-gray-500">/ SESSION</span></p>
+                        <button type="button" class="client-select-program w-full py-3 border border-steel text-white mono-text text-xs tracking-widest hover:bg-rust hover:border-rust transition-colors" data-program="coaching-inperson">BOOK</button>
                     </div>
                 </div>
-                <p class="mt-6"><a href="programs.html#program-templates" class="mono-text text-xs text-gray-500 hover:text-rust transition-colors">Full descriptions on Programs →</a></p>
                 <p id="client-program-interest-msg" class="mt-6 mono-text text-sm text-rust hidden">Interest saved. We'll reach out to complete payment and onboarding.</p>
             </div>
 

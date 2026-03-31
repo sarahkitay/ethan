@@ -1,7 +1,20 @@
 // Register GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-// Magnetic buttons: see js/shared.js (loaded before this file)
+// Magnetic Buttons
+document.querySelectorAll('[data-magnetic]').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+    });
+});
 
 // WebGL Fluid Background
 const container = document.getElementById('webgl-container');
@@ -112,51 +125,34 @@ if (container && typeof THREE !== 'undefined') {
     });
 }
 
-// Hero Animations (only animate nodes that exist on this page)
+// Hero Animations
 const heroTl = gsap.timeline({ delay: 0.5 });
-const heroLabel = document.getElementById('hero-label');
-const heroSpans = document.querySelectorAll('.hero-content .reveal-text span');
-const heroSub = document.getElementById('hero-sub');
-const heroCta = document.getElementById('hero-cta');
 
-if (heroLabel) {
-    gsap.set(heroLabel, { y: 24 });
-    heroTl.to(heroLabel, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power3.out'
-    });
-}
-if (heroSpans.length) {
-    heroTl.to(heroSpans, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        stagger: 0.1,
-        ease: 'expo.out'
-    }, heroLabel ? '-=0.5' : 0);
-}
-if (heroSub) {
-    gsap.set(heroSub, { y: 20 });
-    heroTl.to(heroSub, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power3.out'
-    }, '-=0.8');
-}
-if (heroCta) {
-    gsap.set(heroCta, { y: 20 });
-    heroTl.to(heroCta, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power3.out'
-    }, '-=0.6');
-}
-
-// Programs scroll reveal: Motion in js/programs-motion.js (desktop + mobile).
+heroTl.to('#hero-label', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out'
+})
+.to('.reveal-text span', {
+    y: 0,
+    opacity: 1,
+    duration: 1.2,
+    stagger: 0.1,
+    ease: 'expo.out'
+}, '-=0.5')
+.to('#hero-sub', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out'
+}, '-=0.8')
+.to('#hero-cta', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out'
+}, '-=0.6');
 
 // Scroll Triggers (exclude .program-card so all three cards stay visible)
 gsap.utils.toArray('.screen-section').forEach(section => {
@@ -359,5 +355,21 @@ if (contactForm) {
         localStorage.setItem(INTAKE_FORMS_KEY, JSON.stringify(forms));
         contactForm.reset();
         alert('Application submitted. We\'ll be in touch within 24 hours.');
+    });
+}
+
+// Mobile nav (index does not load shared.js)
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileNavPanel = document.getElementById('mobile-nav-panel');
+if (mobileMenuBtn && mobileNavPanel) {
+    mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNavPanel.classList.toggle('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+    mobileNavPanel.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+            mobileNavPanel.classList.add('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
     });
 }

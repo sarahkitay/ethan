@@ -3,20 +3,16 @@
  */
 const CHECKOUT_CLIENTS_KEY = 'ethan_cope_checkout_clients';
 const PROGRAM_NAMES = {
-    'in-person': 'In-Person Training ($120/session)',
-    'online-bundle': 'Online Coaching ($75/wk)',
+    'in-person': 'In-person training ($120/session)',
+    'online-bundle': 'Online coaching ($75/wk)',
     'premade': 'Program template or bundle',
-    'template-fb3': 'Full Body 3×/wk ($30)',
-    'template-fb2': 'Full Body 2×/wk ($30)',
-    'template-ul4': 'Upper/Lower 4×/wk ($30)',
-    'template-ppl5': 'Upper/Lower + PPL 5×/wk ($30)',
-    'template-bundle': 'Program bundle — all 4 ($100)',
-    'coaching-online': 'Online Coaching ($75/wk)',
-    'coaching-inperson': 'In-Person Training ($120/session)',
-    'compete': 'Legacy: Compete tier',
-    'elite': 'Legacy: Elite tier',
-    'vip': 'Legacy: VIP tier',
-    '1on1': '1-on-1 coaching'
+    'template-fb3': 'Full Body 3× / wk template ($30)',
+    'template-fb2': 'Full Body 2× / wk template ($30)',
+    'template-ul4': 'Upper/Lower 4× template ($30)',
+    'template-ppl5': 'Upper/Lower + PPL 5× template ($30)',
+    'bundle-all4': 'All 4 programs bundle ($100)',
+    'coaching-online': 'Online coaching ($75/wk)',
+    'coaching-inperson': 'In-person training ($120/session)'
 };
 
 const params = new URLSearchParams(window.location.search);

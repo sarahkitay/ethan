@@ -26,11 +26,11 @@ const DEMO_CLIENT = {
 };
 
 const DEMO_PROGRAM = {
-    name: 'Online Coaching',
-    type: 'ONLINE',
+    name: 'Online coaching',
+    type: 'COACHING',
     startDate: '2024-01-15',
     endDate: '2024-04-15',
-    notes: 'Weekly check-in Fridays. Training + nutrition personalized.',
+    notes: 'Focus on HYROX build and body comp. Weekly check-in Fridays.',
     sessionsTotal: 12,
     sessionsUsed: 4
 };

@@ -15,14 +15,9 @@ const mobileNavPanel = document.getElementById('mobile-nav-panel');
 if (mobileMenuBtn && mobileNavPanel) {
     mobileMenuBtn.addEventListener('click', () => {
         mobileNavPanel.classList.toggle('hidden');
-        const expanded = !mobileNavPanel.classList.contains('hidden');
-        mobileMenuBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
     });
     mobileNavPanel.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileNavPanel.classList.add('hidden');
-            mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        });
+        link.addEventListener('click', () => { mobileNavPanel.classList.add('hidden'); });
     });
 }
 
