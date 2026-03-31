@@ -201,7 +201,7 @@ body {
     justify-content: flex-start;
     position: sticky;
     top: 0;
-    padding: 15.5rem 1.5rem 4rem;
+    padding: 10.5rem 1.5rem 4rem;
     /* Don’t clip the pricing grid — overflow hidden caused void “bars” / black flashes */
     overflow-x: hidden;
     overflow-y: visible;
@@ -212,7 +212,7 @@ body {
 .programs-hero {
     text-align: center;
     margin-bottom: 0;
-    padding-bottom: 4rem;
+    padding-bottom: 1.75rem;
 }
 
 .programs-intro {
@@ -272,13 +272,13 @@ body {
     }
 
     .programs-scroll-content {
-        padding: 6.75rem 0.5rem 3rem;
+        padding: 5rem 0.5rem 3rem;
         overflow-x: hidden;
         overflow-y: visible;
     }
 
     .programs-hero {
-        padding-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
     }
 
     .programs-title {
