@@ -1,9 +1,9 @@
 /**
  * Programs section: scroll-driven reveal (Motion).
- * Runs after window load + layout so section height / sticky + spacer are measured correctly.
+ * After load + layout pass so sticky + spacer heights are correct.
  *
- * Desktop: shorter spacer (CSS) + tighter scroll offsets so title → cards happens with less scrolling.
- * Cards use one scroll() per element; opacity + scale in the same animate() (no competing drivers).
+ * Desktop: original long scroll (220vh spacer in CSS) + Motion offsets/times that keep
+ * intro / PROGRAMS / cards on screen longer while the strip stays sticky.
  */
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
 
@@ -49,9 +49,6 @@ function setupProgramsScrollAnimations() {
     cubicBezier(0.87, 0, 0.13, 1)
   ];
 
-  /* Scale starts slightly below 1 to avoid transform bugs with 0 */
-  const cardScaleFrom = 0.86;
-
   if (intro) {
     if (isMobile) {
       scroll(
@@ -64,10 +61,10 @@ function setupProgramsScrollAnimations() {
     } else {
       scroll(
         animate(intro, { opacity: [0, 0, 1] }, {
-          times: [0, 0.12, 0.55],
+          times: [0, 0.15, 1],
           easing: easeSoft
         }),
-        { target: section, offset: ['start start', '0.18 end'] }
+        { target: section, offset: ['start start', '0.3 end'] }
       );
     }
   }
@@ -84,10 +81,10 @@ function setupProgramsScrollAnimations() {
     } else {
       scroll(
         animate(title, { opacity: [0, 0, 1], y: [titleYDesk, titleYDesk, '0rem'] }, {
-          times: [0, 0.2, 0.58],
+          times: [0, 0.28, 1],
           easing: easeOut
         }),
-        { target: section, offset: ['start start', '0.26 end'] }
+        { target: section, offset: ['start start', '0.42 end'] }
       );
     }
   }
@@ -101,18 +98,18 @@ function setupProgramsScrollAnimations() {
         const tEnd = Math.max(oEnd, sEnd);
 
         scroll(
-          animate(card, { opacity: [0, 0, 1], scale: [cardScaleFrom, cardScaleFrom, 1] }, {
+          animate(card, { opacity: [0, 0, 1], scale: [0.9, 0.9, 1] }, {
             times: [0, tMid, tEnd],
             easing: scaleEasings[index]
           }),
           { target: section, offset: ['start end', 'start start'] }
         );
       } else {
-        const mid = 0.22 + index * 0.05;
+        const mid = 0.5 + index * 0.06;
 
         scroll(
-          animate(card, { opacity: [0, 0, 1], scale: [cardScaleFrom, cardScaleFrom, 1] }, {
-            times: [0, Math.min(0.42, mid), 0.72],
+          animate(card, { opacity: [0, 0, 1], scale: [0.9, 0.9, 1] }, {
+            times: [0, Math.min(0.75, mid), 1],
             easing: cardEase
           }),
           { target: section, offset: ['start start', 'end end'] }

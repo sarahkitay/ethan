@@ -208,15 +208,17 @@ nav.fixed.top-0 {
     }
 }
 
-/* Desktop: less vertical scroll from PROGRAMS headline → three cards (was 220vh). */
+/*
+ * Desktop: tall spacer so sticky `.programs-scroll-content` stays pinned while you scroll
+ * (original behavior). Short spacer made the strip release too soon → black gap + “too fast” feel.
+ */
 .programs-scroll-spacer {
-    min-height: 115vh;
+    min-height: 220vh;
 }
 
 @media (max-width: 768px) {
-    /* Enough range for Motion; still short vs old desktop spacer */
     .programs-scroll-spacer {
-        min-height: max(32vh, 11rem);
+        min-height: max(26vh, 10rem);
     }
 }
 
@@ -336,7 +338,7 @@ nav.fixed.top-0 {
 
 .program-reveal-card {
     opacity: 0;
-    transform: scale(0.86);
+    transform: scale(0.9);
     min-width: 0;
 }
 
