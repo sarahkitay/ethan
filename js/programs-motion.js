@@ -26,15 +26,19 @@ if (prefersReducedMotion) {
   const section = document.querySelector('.programs-scroll-section');
   const cards = document.querySelectorAll('.program-reveal-card');
   const hero = document.querySelector('.programs-hero');
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
-  /** Space between card windows (section progress 0–1, target edge vs viewport bottom) */
-  const CARD_GAP = 0.005;
   /**
-   * Cards start after the hero timeline has begun (section already entering view).
-   * Finish reveals by ~0.72 so remaining scroll is “coast” with cards fully on.
+   * Mobile: shorter gaps + earlier card band + minimal “dead” keyframe time so scroll never
+   * feels like it’s fighting the animation (was ~26% of each card window at opacity 0).
    */
-  const CARDS_START = 0.16;
-  const CARDS_END = 0.72;
+  const CARD_GAP = isMobile ? 0.002 : 0.005;
+  const CARDS_START = isMobile ? 0.1 : 0.16;
+  /** Finish card reveals earlier on mobile — more scroll is pure coast with cards fully on */
+  const CARDS_END = isMobile ? 0.52 : 0.72;
+  /** Fraction of each card’s scroll window spent idle at start (lower = less “stuck”) */
+  const CARD_INERTIA = isMobile ? 0.04 : 0.12;
+  const cardSlideX = isMobile ? 40 : CARD_SLIDE_X;
 
   if (section && hero) {
     /**
@@ -50,9 +54,10 @@ if (prefersReducedMotion) {
           y: ['0.85rem', '0rem', '0rem', '0rem', '0rem']
         },
         {
-          /* Headline on almost immediately, hold, then ease out near section exit */
-          times: [0, 0.035, 0.1, 0.7, 1],
-          easing: easeSoft
+          /* Mobile: shorter plateaus + linear easing so scroll doesn’t “hang” on the hero */
+          /* Fade headline out only after card band (CARDS_END ~0.52 on mobile) */
+          times: isMobile ? [0, 0.02, 0.07, 0.56, 1] : [0, 0.035, 0.1, 0.7, 1],
+          easing: isMobile ? linearScroll : easeSoft
         }
       ),
       { target: section, offset: ['start end', 'end end'] }
@@ -76,12 +81,12 @@ if (prefersReducedMotion) {
           card,
           {
             opacity: [0, 0, 1],
-            x: [CARD_SLIDE_X, CARD_SLIDE_X, 0],
+            x: [cardSlideX, cardSlideX, 0],
             scale: [0.96, 0.96, 1]
           },
           {
-            /* Hit full visibility earlier in each segment = scroll keeps feeling responsive */
-            times: [0, 0.26, 1],
+            /* Tighten first leg: most of each window is the actual fade/slide (linear = even with scroll) */
+            times: [0, CARD_INERTIA, 1],
             easing: linearScroll
           }
         ),

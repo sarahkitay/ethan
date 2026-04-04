@@ -298,8 +298,9 @@ body {
 }
 
 @media (max-width: 900px) {
+    /* Was 240vh — too much sticky travel; felt like scroll “stuck” on the programs stack */
     .programs-scroll-spacer {
-        min-height: 240vh;
+        min-height: min(200vh, calc(120vh + 42rem));
     }
 
     /* Stack pricing cards; desktop keeps 3-column grid */
