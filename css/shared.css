@@ -196,7 +196,8 @@ body {
 }
 
 .programs-scroll-spacer {
-    min-height: 280vh;
+    /* Shorter than before — less “stuck” scroll while sticky; cards still have room to reveal */
+    min-height: 155vh;
     /* Bridge void → results palette while spacer scrolls (avoids flat “black hole”) */
     background: linear-gradient(
         180deg,
@@ -216,7 +217,8 @@ body {
     justify-content: flex-start;
     position: sticky;
     top: 0;
-    padding: clamp(9rem, 14vh, 11.5rem) 1.5rem 3rem;
+    /* Room under fixed nav; hero + headline clear the card grid below */
+    padding: clamp(5.5rem, 11vh, 7.5rem) 1.5rem 2.5rem;
     /* Don’t clip the pricing grid — overflow hidden caused void “bars” / black flashes */
     overflow-x: hidden;
     overflow-y: visible;
@@ -226,8 +228,8 @@ body {
 
 .programs-hero {
     text-align: center;
-    margin-bottom: 0;
-    padding-bottom: clamp(0.75rem, 2vh, 1.75rem);
+    margin-bottom: clamp(1.75rem, 5vw, 3.5rem);
+    padding-bottom: clamp(0.5rem, 2vw, 1.25rem);
     flex-shrink: 0;
     width: 100%;
     max-width: 100%;
@@ -241,12 +243,17 @@ body {
 .programs-intro {
     opacity: 1;
     will-change: opacity;
+    /* Keep “01 — PROGRAMS” clear of the oversized headline below */
+    margin-bottom: clamp(0.65rem, 2vw, 1.1rem);
 }
 
 .programs-title {
-    font-size: clamp(4rem, 18vw, 14rem);
-    line-height: 0.85;
+    font-size: clamp(3.5rem, 16vw, 12rem);
+    line-height: 0.9;
     margin: 0;
+    /* Space between glyph box and pricing cards (tight line-height still bleeds visually) */
+    margin-bottom: clamp(0.35rem, 1.5vw, 0.85rem);
+    padding-bottom: clamp(0.15rem, 0.8vw, 0.45rem);
     color: #e5e5e5;
     opacity: 1;
     will-change: transform;
@@ -271,8 +278,8 @@ body {
     gap: clamp(1rem, 4vw, 2.5rem);
     max-width: 1400px;
     width: 100%;
-    /* Pull grid toward headline so cards feel like they replace the word */
-    margin: clamp(-4.5rem, -9vh, -2rem) auto 0;
+    /* Clear separation from hero — large “PROGRAMS” must not sit on the cards */
+    margin: clamp(2rem, 5vh, 3.5rem) auto 0;
     padding: 0 1rem;
     flex-shrink: 0;
     position: relative;
@@ -292,7 +299,7 @@ body {
 
 @media (max-width: 900px) {
     .programs-scroll-spacer {
-        min-height: 420vh;
+        min-height: 240vh;
     }
 
     /* Stack pricing cards; desktop keeps 3-column grid */
@@ -304,22 +311,25 @@ body {
     }
 
     .programs-scroll-content {
-        padding: clamp(4.75rem, 12vw, 6rem) 0.5rem 2.5rem;
+        padding: clamp(4.75rem, 12vw, 6rem) 0.5rem 2rem;
         overflow-x: hidden;
         overflow-y: visible;
     }
 
     .programs-hero {
+        margin-bottom: clamp(1.25rem, 4vw, 2rem);
         padding-bottom: 0.5rem;
     }
 
     .programs-title {
         font-size: clamp(2.25rem, 14vw, 4.25rem);
-        line-height: 0.88;
+        line-height: 0.92;
+        margin-bottom: 0.25rem;
+        padding-bottom: 0.2rem;
     }
 
     .programs-grid {
-        margin-top: clamp(-2rem, -5vh, -0.75rem);
+        margin-top: clamp(1.25rem, 3.5vh, 2rem);
     }
 
     .programs-section .program-reveal-card.program-card:hover {
@@ -329,7 +339,7 @@ body {
 
 .program-reveal-card {
     opacity: 0;
-    transform: translateX(2rem) scale(0.93);
+    transform: translateX(56px) scale(0.96);
     will-change: opacity, transform;
 }
 

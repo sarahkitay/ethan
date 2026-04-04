@@ -7,7 +7,8 @@ import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motio
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const easeSoft = cubicBezier(0.4, 0, 0.2, 1);
-const opacityEase = cubicBezier(0.61, 1, 0.88, 1);
+/** Linear — scroll position maps evenly to card reveal (less “sticky” easing fight) */
+const linearScroll = cubicBezier(0, 0, 1, 1);
 
 const CARD_SLIDE_X = 56;
 
@@ -27,10 +28,13 @@ if (prefersReducedMotion) {
   const hero = document.querySelector('.programs-hero');
 
   /** Space between card windows (section progress 0–1) */
-  const CARD_GAP = 0.006;
-  /** Card reveals occupy this band so every card finishes before the section ends */
-  const CARDS_START = 0.09;
-  const CARDS_END = 0.94;
+  const CARD_GAP = 0.005;
+  /**
+   * Finish reveals by ~0.72 so most remaining section scroll is “coast” with cards fully on
+   * (pairs with shorter .programs-scroll-spacer for smoother exit).
+   */
+  const CARDS_START = 0.1;
+  const CARDS_END = 0.72;
 
   if (section && hero) {
     scroll(
@@ -67,11 +71,12 @@ if (prefersReducedMotion) {
           {
             opacity: [0, 0, 1],
             x: [CARD_SLIDE_X, CARD_SLIDE_X, 0],
-            scale: [0.93, 0.93, 1]
+            scale: [0.96, 0.96, 1]
           },
           {
-            times: [0, 0.38, 1],
-            easing: opacityEase
+            /* Hit full visibility earlier in each segment = scroll keeps feeling responsive */
+            times: [0, 0.26, 1],
+            easing: linearScroll
           }
         ),
         { target: section, offset: [startStr, endStr] }

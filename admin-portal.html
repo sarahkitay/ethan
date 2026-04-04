@@ -504,7 +504,24 @@
         </div>
     </div>
 
+    <!-- Admin: edit public program template (JSON) -->
+    <div id="admin-prebuilt-editor-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-6 bg-void/90">
+        <div class="bg-charcoal border border-steel max-w-3xl w-full max-h-[90vh] flex flex-col p-6 overflow-hidden">
+            <h3 id="admin-prebuilt-editor-title" class="display-text text-xl text-white mb-2">Edit program template</h3>
+            <p class="mono-text text-xs text-gray-500 mb-4">JSON for this template on the public Programs page. Reload <span class="text-gray-400">programs.html</span> after saving to see changes. Keep <span class="text-rust">id</span> as <span id="admin-prebuilt-editor-id-hint" class="text-rust"></span> and <span class="text-rust">kind</span> as <code class="text-gray-400">template</code>.</p>
+            <textarea id="admin-prebuilt-editor-json" class="dark-input bg-gunmetal border border-steel py-2 px-4 w-full flex-1 min-h-[280px] max-h-[50vh] font-mono text-xs text-gray-200 resize-y" spellcheck="false"></textarea>
+            <p id="admin-prebuilt-editor-error" class="mono-text text-xs text-rust mt-2 hidden"></p>
+            <p id="admin-prebuilt-editor-status" class="mono-text text-xs text-amber mt-2 hidden"></p>
+            <div class="flex flex-wrap gap-3 mt-4">
+                <button type="button" id="admin-prebuilt-editor-save" class="py-3 px-5 bg-rust text-void mono-text text-xs tracking-widest hover:bg-amber transition-colors">SAVE</button>
+                <button type="button" id="admin-prebuilt-editor-reset" class="py-3 px-5 border border-steel text-gray-400 mono-text text-xs tracking-widest hover:border-rust hover:text-white transition-colors">RESET TO DEFAULT</button>
+                <button type="button" id="admin-prebuilt-editor-cancel" class="py-3 px-5 border border-steel text-gray-400 mono-text text-xs tracking-widest hover:border-steel hover:text-white transition-colors">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/shared.js"></script>
+    <script src="js/prebuilt-programs-data.js"></script>
     <script src="js/cms-defaults.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/cms-runtime.js"></script>

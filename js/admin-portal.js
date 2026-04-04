@@ -9,6 +9,9 @@ const MEAL_PLAN_FORMS_KEY = 'ethan_cope_meal_plan_forms';
 const PROGRAM_REQUESTS_KEY = 'ethan_cope_program_requests';
 const APPLICATIONS_STORAGE_KEY = 'ethan_cope_applications';
 const CHECKOUT_CLIENTS_KEY = 'ethan_cope_checkout_clients';
+const PREBUILT_OVERRIDES_KEY = 'ethan_cope_prebuilt_overrides';
+/** Fallback when older stored admin programs omit prebuiltId */
+const ADMIN_TEMPLATE_PREBUILT_MAP = { p1: 'pb-fb3', p2: 'pb-fb2', p3: 'pb-ul4', p4: 'pb-ppl5' };
 
 const DEMO_ADMIN = { email: 'admin@ethancope.com', password: 'admin123' };
 
@@ -19,10 +22,10 @@ const DEMO_ADMIN_CLIENTS = [
 ];
 
 const DEMO_ADMIN_PROGRAMS = [
-    { id: 'p1', name: 'Full Body 3× / wk template', type: 'TEMPLATE', clientCount: 0, duration: 'Ongoing' },
-    { id: 'p2', name: 'Full Body 2× / wk template', type: 'TEMPLATE', clientCount: 0, duration: 'Ongoing' },
-    { id: 'p3', name: 'Upper/Lower 4× template', type: 'TEMPLATE', clientCount: 0, duration: 'Ongoing' },
-    { id: 'p4', name: 'Upper/Lower + PPL 5× template', type: 'TEMPLATE', clientCount: 0, duration: 'Ongoing' },
+    { id: 'p1', name: 'Full Body 3× / wk template', type: 'TEMPLATE', prebuiltId: 'pb-fb3', clientCount: 0, duration: 'Ongoing' },
+    { id: 'p2', name: 'Full Body 2× / wk template', type: 'TEMPLATE', prebuiltId: 'pb-fb2', clientCount: 0, duration: 'Ongoing' },
+    { id: 'p3', name: 'Upper/Lower 4× template', type: 'TEMPLATE', prebuiltId: 'pb-ul4', clientCount: 0, duration: 'Ongoing' },
+    { id: 'p4', name: 'Upper/Lower + PPL 5× template', type: 'TEMPLATE', prebuiltId: 'pb-ppl5', clientCount: 0, duration: 'Ongoing' },
     { id: 'p5', name: 'All 4 programs bundle', type: 'BUNDLE', clientCount: 0, duration: 'One-time' },
     { id: 'p6', name: 'Online coaching', type: 'COACHING', clientCount: 2, duration: 'Weekly' },
     { id: 'p7', name: 'In-person training', type: 'COACHING', clientCount: 0, duration: 'Per session' }
@@ -70,6 +73,180 @@ function getAdminPrograms() {
 
 function setAdminPrograms(programs) {
     localStorage.setItem(ADMIN_PROGRAMS_KEY, JSON.stringify(programs));
+}
+
+function resolveAdminProgramPrebuiltId(program) {
+    if (program.prebuiltId) return program.prebuiltId;
+    if (program.type !== 'TEMPLATE') return null;
+    return ADMIN_TEMPLATE_PREBUILT_MAP[program.id] || null;
+}
+
+function getAdminPrebuiltOverridesMap() {
+    try {
+        const raw = localStorage.getItem(PREBUILT_OVERRIDES_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch {
+        return {};
+    }
+}
+
+function mergeAdminPrebuiltEntry(base, over) {
+    if (!over) return base;
+    const out = { ...base, ...over };
+    if (Array.isArray(over.days)) out.days = JSON.parse(JSON.stringify(over.days));
+    if (Array.isArray(over.importantNotes)) out.importantNotes = [...over.importantNotes];
+    if (Array.isArray(over.features)) out.features = [...over.features];
+    if (Array.isArray(over.sampleExercises)) out.sampleExercises = [...over.sampleExercises];
+    if (Array.isArray(over.bundleIncludes)) out.bundleIncludes = [...over.bundleIncludes];
+    return out;
+}
+
+function getAdminMergedPrebuiltTemplate(prebuiltId) {
+    const list = typeof window !== 'undefined' ? window.__PREBUILT_PROGRAMS_DATA__ : null;
+    if (!list || !Array.isArray(list)) return null;
+    const base = list.find((p) => p.id === prebuiltId);
+    if (!base) return null;
+    const overrides = getAdminPrebuiltOverridesMap();
+    return mergeAdminPrebuiltEntry(JSON.parse(JSON.stringify(base)), overrides[prebuiltId]);
+}
+
+let adminPrebuiltEditorCurrentId = null;
+
+function adminPrebuiltEditorClose() {
+    const modal = document.getElementById('admin-prebuilt-editor-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+    adminPrebuiltEditorCurrentId = null;
+}
+
+function adminPrebuiltEditorShowError(msg) {
+    const err = document.getElementById('admin-prebuilt-editor-error');
+    const st = document.getElementById('admin-prebuilt-editor-status');
+    if (st) {
+        st.classList.add('hidden');
+        st.textContent = '';
+    }
+    if (err) {
+        err.textContent = msg;
+        err.classList.remove('hidden');
+    }
+}
+
+function adminPrebuiltEditorClearMessages() {
+    ['admin-prebuilt-editor-error', 'admin-prebuilt-editor-status'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.add('hidden');
+            el.textContent = '';
+        }
+    });
+}
+
+function openAdminPrebuiltEditor(prebuiltId) {
+    adminPrebuiltEditorCurrentId = prebuiltId;
+    const merged = getAdminMergedPrebuiltTemplate(prebuiltId);
+    if (!merged) {
+        alert('Program data not loaded. Ensure prebuilt-programs-data.js is included before admin-portal.js.');
+        adminPrebuiltEditorCurrentId = null;
+        return;
+    }
+    const modal = document.getElementById('admin-prebuilt-editor-modal');
+    const ta = document.getElementById('admin-prebuilt-editor-json');
+    const title = document.getElementById('admin-prebuilt-editor-title');
+    const hint = document.getElementById('admin-prebuilt-editor-id-hint');
+    if (!modal || !ta) return;
+    if (title) title.textContent = `Edit: ${merged.name || prebuiltId}`;
+    if (hint) hint.textContent = `"${prebuiltId}"`;
+    ta.value = JSON.stringify(merged, null, 2);
+    adminPrebuiltEditorClearMessages();
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function saveAdminPrebuiltEditor() {
+    const prebuiltId = adminPrebuiltEditorCurrentId;
+    const ta = document.getElementById('admin-prebuilt-editor-json');
+    if (!prebuiltId || !ta) return;
+    let parsed;
+    try {
+        parsed = JSON.parse(ta.value);
+    } catch (e) {
+        adminPrebuiltEditorShowError('Invalid JSON: ' + e.message);
+        return;
+    }
+    if (!parsed || typeof parsed !== 'object') {
+        adminPrebuiltEditorShowError('Root must be an object.');
+        return;
+    }
+    if (parsed.id !== prebuiltId) {
+        adminPrebuiltEditorShowError(`id must stay "${prebuiltId}".`);
+        return;
+    }
+    if (parsed.kind !== 'template') {
+        adminPrebuiltEditorShowError('kind must be "template".');
+        return;
+    }
+    if (!Array.isArray(parsed.days)) {
+        adminPrebuiltEditorShowError('days must be an array.');
+        return;
+    }
+    const list = window.__PREBUILT_PROGRAMS_DATA__;
+    const base = list?.find((p) => p.id === prebuiltId);
+    if (!base) {
+        adminPrebuiltEditorShowError('Unknown template.');
+        return;
+    }
+    const merged = mergeAdminPrebuiltEntry(JSON.parse(JSON.stringify(base)), parsed);
+    const all = getAdminPrebuiltOverridesMap();
+    all[prebuiltId] = merged;
+    localStorage.setItem(PREBUILT_OVERRIDES_KEY, JSON.stringify(all));
+    adminPrebuiltEditorClearMessages();
+    ta.value = JSON.stringify(merged, null, 2);
+    const st = document.getElementById('admin-prebuilt-editor-status');
+    if (st) {
+        st.textContent = 'Saved. Reload programs.html to see changes on the public site.';
+        st.classList.remove('hidden');
+    }
+}
+
+function resetAdminPrebuiltEditor() {
+    const prebuiltId = adminPrebuiltEditorCurrentId;
+    if (!prebuiltId) return;
+    if (!confirm('Remove custom edits for this template and restore the default from the site bundle?')) return;
+    const all = getAdminPrebuiltOverridesMap();
+    delete all[prebuiltId];
+    localStorage.setItem(PREBUILT_OVERRIDES_KEY, JSON.stringify(all));
+    const merged = getAdminMergedPrebuiltTemplate(prebuiltId);
+    const ta = document.getElementById('admin-prebuilt-editor-json');
+    if (merged && ta) ta.value = JSON.stringify(merged, null, 2);
+    adminPrebuiltEditorClearMessages();
+}
+
+function initAdminPrebuiltTemplateEditor() {
+    const list = document.getElementById('admin-programs-list');
+    if (list && !list.dataset.prebuiltEditorBound) {
+        list.dataset.prebuiltEditorBound = '1';
+        list.addEventListener('click', (e) => {
+            const card = e.target.closest('[data-prebuilt-template-id]');
+            if (!card) return;
+            openAdminPrebuiltEditor(card.dataset.prebuiltTemplateId);
+        });
+        list.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const card = e.target.closest('[data-prebuilt-template-id]');
+            if (!card || !list.contains(card)) return;
+            e.preventDefault();
+            openAdminPrebuiltEditor(card.dataset.prebuiltTemplateId);
+        });
+    }
+    document.getElementById('admin-prebuilt-editor-cancel')?.addEventListener('click', adminPrebuiltEditorClose);
+    document.getElementById('admin-prebuilt-editor-save')?.addEventListener('click', saveAdminPrebuiltEditor);
+    document.getElementById('admin-prebuilt-editor-reset')?.addEventListener('click', resetAdminPrebuiltEditor);
+    document.getElementById('admin-prebuilt-editor-modal')?.addEventListener('click', (e) => {
+        if (e.target.id === 'admin-prebuilt-editor-modal') adminPrebuiltEditorClose();
+    });
 }
 
 function getCheckoutClients() {
@@ -317,16 +494,27 @@ function renderAdminProgramsList() {
     const programs = getAdminPrograms();
     const el = document.getElementById('admin-programs-list');
     if (!el) return;
-    el.innerHTML = programs.map(p => `
-        <div class="program-card">
+    el.innerHTML = programs.map((p) => {
+        const pbId = resolveAdminProgramPrebuiltId(p);
+        const editable = Boolean(pbId);
+        const cardClass = editable
+            ? 'program-card cursor-pointer border border-steel hover:border-rust/60 transition-colors focus:outline-none focus:ring-2 focus:ring-rust/40'
+            : 'program-card';
+        const attrs = editable
+            ? `data-prebuilt-template-id="${pbId}" role="button" tabindex="0" title="Edit program template on public Programs page"`
+            : '';
+        return `
+        <div class="${cardClass}" ${attrs}>
             <div class="flex justify-between items-start mb-2">
                 <span class="badge badge-rust">${p.type}</span>
                 <span class="mono-text text-xs text-gray-500">${p.clientCount || 0} clients</span>
             </div>
             <h3 class="display-text text-xl text-white mb-2">${p.name}</h3>
             <p class="text-gray-500 text-sm">${p.duration || '-'}</p>
+            ${editable ? '<p class="mono-text text-xs text-rust mt-3 tracking-wide">Click to edit template →</p>' : ''}
         </div>
-    `).join('');
+    `;
+    }).join('');
 }
 
 function renderAdminWorkoutVideos() {
@@ -833,6 +1021,7 @@ document.getElementById('admin-add-program-form').addEventListener('submit', fun
 });
 
 // Init
+initAdminPrebuiltTemplateEditor();
 if (getStoredAdmin()) {
     showAdminDashboard();
 } else {

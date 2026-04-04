@@ -68,20 +68,11 @@
         <section class="px-6 md:px-12 lg:px-24 max-w-5xl mx-auto">
             <div class="section-marker">CONTACT</div>
 
-            <!-- Contact: action buttons only (targets in hrefs) -->
-            <div class="grid gap-8 md:grid-cols-3 mb-20">
-                <div class="contact-top-card border border-steel rounded-lg p-8 bg-charcoal/50 flex flex-col justify-center">
-                    <div class="flex gap-3">
-                        <a href="tel:8187032026" class="magnetic-btn inline-block text-sm py-3 px-4 flex-1 text-center" data-magnetic><span>CALL</span></a>
-                        <a href="sms:8187032026" class="magnetic-btn inline-block text-sm py-3 px-4 flex-1 text-center" data-magnetic><span>TEXT</span></a>
-                    </div>
-                </div>
-                <div class="contact-top-card border border-steel rounded-lg p-8 bg-charcoal/50 flex flex-col justify-center">
-                    <a href="mailto:ethanwcope@gmail.com" class="magnetic-btn inline-flex items-center justify-center text-sm py-3 px-4 w-full text-center" data-magnetic><span>EMAIL</span></a>
-                </div>
-                <div class="contact-top-card border border-steel rounded-lg p-8 bg-charcoal/50 flex flex-col justify-center">
-                    <a href="client-portal.html" class="magnetic-btn inline-flex items-center justify-center text-sm py-3 px-4 w-full text-center" data-magnetic><span>GO TO PORTAL</span></a>
-                </div>
+            <!-- Contact: single line of actions (same targets as before) -->
+            <div class="contact-top-card border border-steel rounded-lg p-8 md:p-10 bg-charcoal/50 mb-20 max-w-4xl">
+                <p class="mono-text text-xs sm:text-sm tracking-[0.22em] text-gray-300 leading-relaxed">
+                    <a href="tel:8187032026" class="text-white hover:text-rust transition-colors">CALL</a><span class="text-steel px-2 sm:px-3" aria-hidden="true">·</span><a href="sms:8187032026" class="text-white hover:text-rust transition-colors">TEXT</a><span class="text-steel px-2 sm:px-3" aria-hidden="true">·</span><a href="mailto:ethanwcope@gmail.com" class="text-white hover:text-rust transition-colors">EMAIL</a><span class="text-steel px-2 sm:px-3" aria-hidden="true">·</span><a href="client-portal.html" class="text-white hover:text-rust transition-colors">GO TO PORTAL</a>
+                </p>
             </div>
 
             <h1 class="display-text text-4xl md:text-6xl text-white mb-2">FIND YOUR FIT</h1>
