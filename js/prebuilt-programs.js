@@ -121,7 +121,7 @@ function openBundleModal(prog) {
     daysEl.innerHTML = `
         <section class="mb-6">
             <h4 class="display-text text-lg text-white mb-3">Sample prescription (first session)</h4>
-            <p class="text-gray-500 text-sm mb-4">Same style of detail across all four programs — tempo, sets, reps, RIR, and cues.</p>
+            <p class="text-gray-500 text-sm mb-4">Same style of detail across all four programs: tempo, sets, reps, RIR, and cues.</p>
             <ul class="space-y-2 text-gray-400 text-sm border border-steel/60 bg-gunmetal/30 p-4">
                 ${previews.map((n) => `<li class="flex gap-2"><span class="text-rust">·</span>${n}</li>`).join('')}
             </ul>
@@ -222,7 +222,7 @@ function openPrebuiltModal(prog) {
                     ? `<div class="mt-4 p-4 bg-gunmetal/80 border border-steel rounded-sm">
                     <p class="mono-text text-xs text-gray-400 mb-3 tracking-wide">+${hidden} more exercise${
                           hidden !== 1 ? 's' : ''
-                      } in this session — full template after purchase.</p>
+                      } in this session. Full template after purchase.</p>
                     <div class="flex flex-wrap gap-3">
                         <a href="checkout.html?program=${encodeURIComponent(prog.checkoutQuery)}" class="magnetic-btn inline-block text-sm py-3 px-5" data-magnetic><span>${prog.purchaseLabel}</span></a>
                         <a href="index.html#contact" class="mono-text text-xs tracking-widest text-gray-500 hover:text-rust py-3 px-2 inline-flex items-center border border-transparent hover:border-steel transition-colors">QUESTIONS → CONTACT</a>

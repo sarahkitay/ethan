@@ -890,7 +890,7 @@ adminApptForm?.addEventListener('submit', (e) => {
     if (detail) {
         const dayAppts = getAppointments().filter((a) => a.date === date);
         if (!dayAppts.length) {
-            detail.innerHTML = `<p class="mono-text text-sm text-gray-400">${date} — <span class="text-gray-500">No appointments scheduled.</span></p>`;
+            detail.innerHTML = `<p class="mono-text text-sm text-gray-400">${date} - <span class="text-gray-500">No appointments scheduled.</span></p>`;
         } else {
             detail.innerHTML = `
                 <p class="mono-text text-xs text-rust mb-2">${date}</p>
@@ -905,7 +905,7 @@ adminApptForm?.addEventListener('submit', (e) => {
                                       ? 'admin-status-denied'
                                       : 'admin-status-pending';
                             return `<li class="flex flex-wrap items-center gap-2 text-gray-300 text-sm">
-                                <span>${a.time || '—'}</span>
+                                <span>${a.time || '-'}</span>
                                 <span>${a.clientName || a.clientEmail || 'Client'}</span>
                                 <span class="admin-status ${cls}">${(a.status || 'requested').toUpperCase()}</span>
                             </li>`;
@@ -926,7 +926,7 @@ document.getElementById('admin-cal-grid')?.addEventListener('click', (e) => {
     if (!detail) return;
     const dayAppts = getAppointments().filter((a) => a.date === dateStr);
     if (!dayAppts.length) {
-        detail.innerHTML = `<p class="mono-text text-sm text-gray-400">${dateStr} — <span class="text-gray-500">No appointments scheduled.</span></p>`;
+        detail.innerHTML = `<p class="mono-text text-sm text-gray-400">${dateStr} - <span class="text-gray-500">No appointments scheduled.</span></p>`;
         return;
     }
     detail.innerHTML = `
@@ -936,7 +936,7 @@ document.getElementById('admin-cal-grid')?.addEventListener('click', (e) => {
                 const st = (a.status || 'requested').toLowerCase();
                 const cls = st === 'approved' ? 'admin-status-approved' : st === 'denied' ? 'admin-status-denied' : 'admin-status-pending';
                 return `<li class="flex flex-wrap items-center gap-2 text-gray-300 text-sm">
-                    <span>${a.time || '—'}</span>
+                    <span>${a.time || '-'}</span>
                     <span>${a.clientName || a.clientEmail || 'Client'}</span>
                     <span class="admin-status ${cls}">${(a.status || 'requested').toUpperCase()}</span>
                 </li>`;

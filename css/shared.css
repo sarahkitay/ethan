@@ -182,7 +182,7 @@ body {
     /* Breathing room above Programs (was -8rem overlap) */
     margin-top: clamp(1.5rem, 4vw, 3.5rem);
     background-color: #0a0a0a;
-    /* Keep programs visually continuous into results — no empty gutter */
+    /* Keep programs visually continuous into results - no empty gutter */
     margin-bottom: 0;
 }
 
@@ -196,7 +196,7 @@ body {
 }
 
 .programs-scroll-spacer {
-    /* Shorter than before — less “stuck” scroll while sticky; cards still have room to reveal */
+    /* Shorter than before - less “stuck” scroll while sticky; cards still have room to reveal */
     min-height: 155vh;
     /* Bridge void → results palette while spacer scrolls (avoids flat “black hole”) */
     background: linear-gradient(
@@ -219,7 +219,7 @@ body {
     top: 0;
     /* Room under fixed nav; hero + headline clear the card grid below */
     padding: clamp(5.5rem, 11vh, 7.5rem) 1.5rem 2.5rem;
-    /* Don’t clip the pricing grid — overflow hidden caused void “bars” / black flashes */
+    /* Don’t clip the pricing grid - overflow hidden caused void “bars” / black flashes */
     overflow-x: hidden;
     overflow-y: visible;
     box-sizing: border-box;
@@ -235,7 +235,7 @@ body {
     max-width: 100%;
     position: relative;
     z-index: 0;
-    /* Opacity driven by programs-motion.js so “01 — PROGRAMS” + headline appear together */
+    /* Opacity driven by programs-motion.js so “01 - PROGRAMS” + headline appear together */
     opacity: 0;
     will-change: opacity, transform;
 }
@@ -243,7 +243,7 @@ body {
 .programs-intro {
     opacity: 1;
     will-change: opacity;
-    /* Keep “01 — PROGRAMS” clear of the oversized headline below */
+    /* Keep “01 - PROGRAMS” clear of the oversized headline below */
     margin-bottom: clamp(0.65rem, 2vw, 1.1rem);
 }
 
@@ -278,7 +278,7 @@ body {
     gap: clamp(1rem, 4vw, 2.5rem);
     max-width: 1400px;
     width: 100%;
-    /* Clear separation from hero — large “PROGRAMS” must not sit on the cards */
+    /* Clear separation from hero - large “PROGRAMS” must not sit on the cards */
     margin: clamp(2rem, 5vh, 3.5rem) auto 0;
     padding: 0 1rem;
     flex-shrink: 0;
@@ -298,9 +298,14 @@ body {
 }
 
 @media (max-width: 900px) {
-    /* Was 240vh — too much sticky travel; felt like scroll “stuck” on the programs stack */
+    /* No sticky + no spacer: scroll stays native while cards animate (see programs-motion.js). */
     .programs-scroll-spacer {
-        min-height: min(200vh, calc(120vh + 42rem));
+        display: none;
+        min-height: 0 !important;
+        height: 0;
+        margin: 0;
+        padding: 0;
+        background: transparent;
     }
 
     /* Stack pricing cards; desktop keeps 3-column grid */
@@ -312,6 +317,8 @@ body {
     }
 
     .programs-scroll-content {
+        position: relative !important;
+        top: auto !important;
         padding: clamp(4.75rem, 12vw, 6rem) 0.5rem 2rem;
         overflow-x: hidden;
         overflow-y: visible;
@@ -320,6 +327,8 @@ body {
     .programs-hero {
         margin-bottom: clamp(1.25rem, 4vw, 2rem);
         padding-bottom: 0.5rem;
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     .programs-title {
@@ -1161,7 +1170,7 @@ main > header.page-header + div {
     }
 }
 
-/* —— Mobile site-wide (≤900px): no effect on viewports ≥901px —— */
+/* -- Mobile site-wide (≤900px): no effect on viewports ≥901px -- */
 @media (max-width: 900px) {
     .results-float-badge {
         position: static;

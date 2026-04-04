@@ -1,5 +1,5 @@
 /**
- * Contact page: stacked fields — first tap reveals phone/email, second tap opens tel/sms/mailto.
+ * Contact page: stacked fields - first tap reveals phone/email, second tap opens tel/sms/mailto.
  */
 (function () {
     const ACTIONS = {

@@ -1,16 +1,45 @@
 /**
- * Programs section: scroll-driven reveal (Motion).
- * “01 — PROGRAMS” + big PROGRAMS headline share one hero fade (same moment).
- * Pricing cards reveal on scroll; segment math scales to card count so none get stuck.
+ * Programs section (Motion).
+ * Desktop: scroll-linked hero + card reveals (sticky section + spacer).
+ * Mobile (≤900px): no sticky trap - native scroll continues while cards fade/slide in via IntersectionObserver.
  */
 import { animate, scroll, cubicBezier } from 'https://cdn.jsdelivr.net/npm/motion@11.11.16/+esm';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const easeSoft = cubicBezier(0.4, 0, 0.2, 1);
-/** Linear — scroll position maps evenly to card reveal (less “sticky” easing fight) */
+/** Linear: scroll position maps evenly to progress (no easing fight). */
 const linearScroll = cubicBezier(0, 0, 1, 1);
-
 const CARD_SLIDE_X = 56;
+const MOBILE_MQ = '(max-width: 900px)';
+
+function mobileProgramsLayout() {
+  return window.matchMedia(MOBILE_MQ).matches;
+}
+
+/** Cards animate independently of scroll progress so finger scrolling never feels "locked" to the tween. */
+function setupMobileProgramReveals(cards) {
+  cards.forEach((card, index) => {
+    const obs = new IntersectionObserver(
+      (entries, o) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          o.unobserve(entry.target);
+          animate(
+            entry.target,
+            { opacity: 1, x: 0, scale: 1 },
+            {
+              duration: 0.42,
+              delay: Math.min(index * 0.035, 0.25),
+              easing: easeSoft
+            }
+          );
+        });
+      },
+      { root: null, rootMargin: '100px 0px 24px 0px', threshold: 0.06 }
+    );
+    obs.observe(card);
+  });
+}
 
 if (prefersReducedMotion) {
   document.querySelectorAll('.program-reveal-card').forEach((el) => {
@@ -22,30 +51,25 @@ if (prefersReducedMotion) {
     hero.style.opacity = '1';
     hero.style.transform = 'none';
   }
+} else if (mobileProgramsLayout()) {
+  const cards = document.querySelectorAll('.program-reveal-card');
+  const hero = document.querySelector('.programs-hero');
+  if (hero) {
+    hero.style.opacity = '1';
+    hero.style.transform = 'none';
+  }
+  setupMobileProgramReveals(cards);
 } else {
   const section = document.querySelector('.programs-scroll-section');
   const cards = document.querySelectorAll('.program-reveal-card');
   const hero = document.querySelector('.programs-hero');
-  const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
-  /**
-   * Mobile: shorter gaps + earlier card band + minimal “dead” keyframe time so scroll never
-   * feels like it’s fighting the animation (was ~26% of each card window at opacity 0).
-   */
-  const CARD_GAP = isMobile ? 0.002 : 0.005;
-  const CARDS_START = isMobile ? 0.1 : 0.16;
-  /** Finish card reveals earlier on mobile — more scroll is pure coast with cards fully on */
-  const CARDS_END = isMobile ? 0.52 : 0.72;
-  /** Fraction of each card’s scroll window spent idle at start (lower = less “stuck”) */
-  const CARD_INERTIA = isMobile ? 0.04 : 0.12;
-  const cardSlideX = isMobile ? 40 : CARD_SLIDE_X;
+  const CARD_GAP = 0.005;
+  const CARDS_START = 0.16;
+  const CARDS_END = 0.72;
+  const CARD_INERTIA = 0.12;
 
   if (section && hero) {
-    /**
-     * start end → end end: progress 0 when the section’s top hits the viewport bottom
-     * (block scrolls into view). Previously start start waited until the top pinned under
-     * the nav — too late for the headline.
-     */
     scroll(
       animate(
         hero,
@@ -54,10 +78,8 @@ if (prefersReducedMotion) {
           y: ['0.85rem', '0rem', '0rem', '0rem', '0rem']
         },
         {
-          /* Mobile: shorter plateaus + linear easing so scroll doesn’t “hang” on the hero */
-          /* Fade headline out only after card band (CARDS_END ~0.52 on mobile) */
-          times: isMobile ? [0, 0.02, 0.07, 0.56, 1] : [0, 0.035, 0.1, 0.7, 1],
-          easing: isMobile ? linearScroll : easeSoft
+          times: [0, 0.035, 0.1, 0.7, 1],
+          easing: easeSoft
         }
       ),
       { target: section, offset: ['start end', 'end end'] }
@@ -81,11 +103,10 @@ if (prefersReducedMotion) {
           card,
           {
             opacity: [0, 0, 1],
-            x: [cardSlideX, cardSlideX, 0],
+            x: [CARD_SLIDE_X, CARD_SLIDE_X, 0],
             scale: [0.96, 0.96, 1]
           },
           {
-            /* Tighten first leg: most of each window is the actual fade/slide (linear = even with scroll) */
             times: [0, CARD_INERTIA, 1],
             easing: linearScroll
           }

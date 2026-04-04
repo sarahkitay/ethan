@@ -6,7 +6,7 @@ const PREBUILT_PROGRAMS_DATA = [
         kind: 'template',
         name: 'FULL BODY (3× / WK)',
         badge: 'PROGRAM TEMPLATE',
-        meta: 'Full Body, Rest, Full Body, Rest, Full Body, Rest, Rest — every calendar week. Tempo, sets, rep ranges, cues, substitutions for gym or home.',
+        meta: 'Full Body, Rest, Full Body, Rest, Full Body, Rest, Rest. Every calendar week. Tempo, sets, rep ranges, cues, substitutions for gym or home.',
         priceDisplay: '$30',
         priceSuffix: 'EACH',
         checkoutQuery: 'template-fb3',
@@ -73,7 +73,7 @@ const PREBUILT_PROGRAMS_DATA = [
                     ex('DB Bench Press (3100 Tempo)', '3 × 8–12', '0–1 RIR', 'Elbows ~45°; full ROM.'),
                     ex('Chest-Supported Row (3000 Tempo)', '3 × 8–12', '1 RIR', 'Pull elbows back; pause at top.'),
                     ex('Walking Lunges (2010 Tempo)', '2 × 10–12 / leg', '1 RIR', 'Torso tall; vertical shin back leg.'),
-                    ex('Cable Pallof Press (3010 Tempo)', '3 × 10–12 / side', '—', 'Brace core; resist rotation.'),
+                    ex('Cable Pallof Press (3010 Tempo)', '3 × 10–12 / side', '-', 'Brace core; resist rotation.'),
                     ex('Plank (RPE-based)', '3 × 30–45s', 'Hard but clean', 'Ribs to hips; breathe behind brace.')
                 ]
             },
@@ -107,7 +107,7 @@ const PREBUILT_PROGRAMS_DATA = [
         ],
         days: [
             {
-                title: 'Day 1 — Upper A',
+                title: 'Day 1 - Upper A',
                 exercises: [
                     ex('Barbell or Machine Bench (3100 Tempo)', '3 × 6–10', '1 RIR', 'Leg drive; bar path stable.'),
                     ex('Chest-Supported Row (3000 Tempo)', '3 × 8–12', '1 RIR', 'Retract; squeeze mid-back.'),
@@ -118,18 +118,18 @@ const PREBUILT_PROGRAMS_DATA = [
                 ]
             },
             {
-                title: 'Day 2 — Lower A',
+                title: 'Day 2 - Lower A',
                 exercises: [
                     ex('Back Squat or Safety Bar Squat (3010 Tempo)', '3 × 6–10', '1 RIR', 'Depth you own; brace hard.'),
                     ex('Romanian Deadlift (3011 Tempo)', '3 × 8–10', '1 RIR', 'Hamstrings long; neutral spine.'),
                     ex('Split Squat (3010 Tempo)', '2 × 10–12 / leg', '1 RIR', 'Torso tall; knee tracks.'),
                     ex('Lying Leg Curl (3100 Tempo)', '2 × 10–12', '0–1 RIR', 'Hips pinned.'),
                     ex('Standing Calf Raise (2110 Tempo)', '3 × 12–15', '1 RIR', 'Pause bottom and top.'),
-                    ex('Dead Bug or Copenhagen (3010 Tempo)', '3 × 8–10 / side', '—', 'Low back flat to floor.')
+                    ex('Dead Bug or Copenhagen (3010 Tempo)', '3 × 8–10 / side', '-', 'Low back flat to floor.')
                 ]
             },
             {
-                title: 'Day 3 — Upper B',
+                title: 'Day 3 - Upper B',
                 exercises: [
                     ex('Incline DB Press (3100 Tempo)', '3 × 8–12', '1 RIR', 'Scaps set; control stretch.'),
                     ex('Single-Arm Cable Row (3000 Tempo)', '3 × 10–12 / arm', '1 RIR', 'Rotate slightly; elbow back.'),
@@ -140,7 +140,7 @@ const PREBUILT_PROGRAMS_DATA = [
                 ]
             },
             {
-                title: 'Day 4 — Lower B',
+                title: 'Day 4 - Lower B',
                 exercises: [
                     ex('Leg Press (3000 Tempo)', '3 × 10–15', '1 RIR', 'Feet where you feel quads + glutes.'),
                     ex('Hip Thrust (3011 Tempo)', '3 × 8–12', '1 RIR', 'Chin tucked; squeeze top.'),
@@ -169,7 +169,7 @@ const PREBUILT_PROGRAMS_DATA = [
         ],
         days: [
             {
-                title: 'Day 1 — Upper (UL block)',
+                title: 'Day 1 - Upper (UL block)',
                 exercises: [
                     ex('Bench or Machine Press (3100 Tempo)', '3 × 6–10', '1 RIR', 'Stable shoulders; full ROM.'),
                     ex('Row Variation (3000 Tempo)', '3 × 8–12', '1 RIR', 'Control negative.'),
@@ -179,7 +179,7 @@ const PREBUILT_PROGRAMS_DATA = [
                 ]
             },
             {
-                title: 'Day 2 — Lower (UL block)',
+                title: 'Day 2 - Lower (UL block)',
                 exercises: [
                     ex('Squat Pattern (3010 Tempo)', '3 × 6–10', '1 RIR', 'Depth and bracing first.'),
                     ex('Hinge Pattern (3011 Tempo)', '3 × 6–10', '1 RIR', 'Hamstrings load; neutral spine.'),
@@ -189,7 +189,7 @@ const PREBUILT_PROGRAMS_DATA = [
                 ]
             },
             {
-                title: 'Day 3 — Push (PPL)',
+                title: 'Day 3 - Push (PPL)',
                 exercises: [
                     ex('Incline Press (3100 Tempo)', '3 × 8–12', '1 RIR', 'Scaps set.'),
                     ex('Shoulder Press (3000 Tempo)', '3 × 8–12', '1 RIR', 'No excessive lean.'),
@@ -199,17 +199,17 @@ const PREBUILT_PROGRAMS_DATA = [
                 ]
             },
             {
-                title: 'Day 4 — Pull (PPL)',
+                title: 'Day 4 - Pull (PPL)',
                 exercises: [
                     ex('Pull-Up or Assisted (3000 Tempo)', '3 × AMRAP −1', '1 RIR', 'Full hang to chin over.'),
                     ex('Chest-Supported Row (3000 Tempo)', '3 × 8–12', '1 RIR', 'Pause top.'),
                     ex('Single-Arm Lat Row (3000 Tempo)', '2 × 10–12 / arm', '1 RIR', 'Elbow to hip.'),
                     ex('Rear Delt + Bicep Superset', '2 × 12–15 each', '1 RIR', 'Strict form.'),
-                    ex('Face Pull (3011 Tempo)', '2 × 15–20', '—', 'External rotation finish.')
+                    ex('Face Pull (3011 Tempo)', '2 × 15–20', '-', 'External rotation finish.')
                 ]
             },
             {
-                title: 'Day 5 — Legs (PPL)',
+                title: 'Day 5 - Legs (PPL)',
                 exercises: [
                     ex('Hack Squat or Front Squat (3010 Tempo)', '3 × 8–12', '1 RIR', 'Knees track; depth you own.'),
                     ex('Romanian Deadlift (3011 Tempo)', '3 × 8–10', '1 RIR', 'Feel hamstrings.'),
@@ -225,7 +225,7 @@ const PREBUILT_PROGRAMS_DATA = [
         kind: 'bundle',
         name: 'ALL 4 PROGRAMS',
         badge: 'PROGRAM BUNDLE',
-        meta: 'Full Body 3×, Full Body 2×, Upper/Lower 4×, and Upper/Lower + PPL 5× — every template, one purchase.',
+        meta: 'Full Body 3×, Full Body 2×, Upper/Lower 4×, and Upper/Lower + PPL 5×. Every template, one purchase.',
         priceDisplay: '$100',
         priceSuffix: 'BUNDLE',
         checkoutQuery: 'bundle-all4',
@@ -243,7 +243,7 @@ const PREBUILT_PROGRAMS_DATA = [
         kind: 'coaching',
         name: 'ONLINE COACHING',
         badge: 'MOST POPULAR',
-        meta: 'Not a static PDF — training and nutrition built around you. Weekly check-in, macros, form feedback, 24/7 support.',
+        meta: 'Not a static PDF: training and nutrition built around you. Weekly check-in, macros, form feedback, 24/7 support.',
         priceDisplay: '$75',
         priceSuffix: '/ WEEK',
         importantNotes: [],
