@@ -62,3 +62,20 @@ if (slides.length) {
         }
     });
 }
+
+/* Long-form story panels: fade/slide in once as they enter view */
+const storyPanels = document.querySelectorAll('.client-stories-section .story-panel');
+if (storyPanels.length && typeof IntersectionObserver !== 'undefined') {
+    const storyObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    storyObserver.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.16, rootMargin: '0px 0px -6% 0px' }
+    );
+    storyPanels.forEach((panel) => storyObserver.observe(panel));
+}
