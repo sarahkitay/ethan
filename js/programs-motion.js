@@ -27,29 +27,35 @@ if (prefersReducedMotion) {
   const cards = document.querySelectorAll('.program-reveal-card');
   const hero = document.querySelector('.programs-hero');
 
-  /** Space between card windows (section progress 0–1) */
+  /** Space between card windows (section progress 0–1, target edge vs viewport bottom) */
   const CARD_GAP = 0.005;
   /**
-   * Finish reveals by ~0.72 so most remaining section scroll is “coast” with cards fully on
-   * (pairs with shorter .programs-scroll-spacer for smoother exit).
+   * Cards start after the hero timeline has begun (section already entering view).
+   * Finish reveals by ~0.72 so remaining scroll is “coast” with cards fully on.
    */
-  const CARDS_START = 0.1;
+  const CARDS_START = 0.16;
   const CARDS_END = 0.72;
 
   if (section && hero) {
+    /**
+     * start end → end end: progress 0 when the section’s top hits the viewport bottom
+     * (block scrolls into view). Previously start start waited until the top pinned under
+     * the nav — too late for the headline.
+     */
     scroll(
       animate(
         hero,
         {
-          opacity: [0, 0, 1, 1, 0],
-          y: ['0.75rem', '0.75rem', '0rem', '0rem', '0rem']
+          opacity: [0, 1, 1, 1, 0],
+          y: ['0.85rem', '0rem', '0rem', '0rem', '0rem']
         },
         {
-          times: [0, 0.03, 0.09, 0.78, 1],
+          /* Headline on almost immediately, hold, then ease out near section exit */
+          times: [0, 0.035, 0.1, 0.7, 1],
           easing: easeSoft
         }
       ),
-      { target: section, offset: ['start start', 'end end'] }
+      { target: section, offset: ['start end', 'end end'] }
     );
   }
 

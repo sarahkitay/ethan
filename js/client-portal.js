@@ -559,8 +559,11 @@ document.querySelectorAll('.client-select-program').forEach(btn => {
 
 // --- Init ---
 const client = getStoredClient();
+const portalSignupHash = /^#(apply|signup)$/i.test(window.location.hash || '');
 if (client && client.email) {
     showDashboard(client);
+} else if (portalSignupHash) {
+    showApply();
 } else {
     showLogin();
 }

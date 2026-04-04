@@ -68,11 +68,60 @@
         <section class="px-6 md:px-12 lg:px-24 max-w-5xl mx-auto">
             <div class="section-marker">CONTACT</div>
 
-            <!-- Contact: single line of actions (same targets as before) -->
-            <div class="contact-top-card border border-steel rounded-lg p-8 md:p-10 bg-charcoal/50 mb-20 max-w-4xl">
-                <p class="mono-text text-xs sm:text-sm tracking-[0.22em] text-gray-300 leading-relaxed">
-                    <a href="tel:8187032026" class="text-white hover:text-rust transition-colors">CALL</a><span class="text-steel px-2 sm:px-3" aria-hidden="true">·</span><a href="sms:8187032026" class="text-white hover:text-rust transition-colors">TEXT</a><span class="text-steel px-2 sm:px-3" aria-hidden="true">·</span><a href="mailto:ethanwcope@gmail.com" class="text-white hover:text-rust transition-colors">EMAIL</a><span class="text-steel px-2 sm:px-3" aria-hidden="true">·</span><a href="client-portal.html" class="text-white hover:text-rust transition-colors">GO TO PORTAL</a>
-                </p>
+            <!-- Contact: stacked fields — tap once to reveal, tap again to call / message / email -->
+            <div class="contact-top-card border border-steel rounded-lg p-8 md:p-10 bg-charcoal/50 mb-20 max-w-xl">
+                <p class="mono-text text-xs text-gray-500 mb-6 tracking-widest">REACH OUT</p>
+                <div class="space-y-6">
+                    <div class="contact-reveal-wrap">
+                        <label for="contact-reveal-call" class="mono-text text-xs tracking-widest text-rust mb-2 block">PHONE</label>
+                        <button
+                            id="contact-reveal-call"
+                            type="button"
+                            class="contact-reveal-field w-full text-left"
+                            data-reveal-action="call"
+                            aria-live="polite"
+                        >
+                            Tap to show number
+                        </button>
+                        <p class="contact-reveal-hint mono-text text-xs text-gray-500 mt-2 hidden" aria-hidden="true"></p>
+                    </div>
+                    <div class="contact-reveal-wrap">
+                        <label for="contact-reveal-sms" class="mono-text text-xs tracking-widest text-rust mb-2 block">TEXT</label>
+                        <button
+                            id="contact-reveal-sms"
+                            type="button"
+                            class="contact-reveal-field w-full text-left"
+                            data-reveal-action="sms"
+                            aria-live="polite"
+                        >
+                            Tap to show number
+                        </button>
+                        <p class="contact-reveal-hint mono-text text-xs text-gray-500 mt-2 hidden" aria-hidden="true"></p>
+                    </div>
+                    <div class="contact-reveal-wrap">
+                        <label for="contact-reveal-email" class="mono-text text-xs tracking-widest text-rust mb-2 block">EMAIL</label>
+                        <button
+                            id="contact-reveal-email"
+                            type="button"
+                            class="contact-reveal-field w-full text-left"
+                            data-reveal-action="email"
+                            aria-live="polite"
+                        >
+                            Tap to show email
+                        </button>
+                        <p class="contact-reveal-hint mono-text text-xs text-gray-500 mt-2 hidden" aria-hidden="true"></p>
+                    </div>
+                    <div>
+                        <label class="mono-text text-xs tracking-widest text-rust mb-2 block">CLIENT PORTAL</label>
+                        <a
+                            href="client-portal.html#apply"
+                            class="contact-portal-direct flex w-full items-center justify-between gap-3 border border-steel bg-gunmetal/80 py-3 px-4 mono-text text-xs tracking-widest text-white transition-colors hover:border-rust hover:text-rust"
+                        >
+                            <span>Sign up for client portal</span>
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <h1 class="display-text text-4xl md:text-6xl text-white mb-2">FIND YOUR FIT</h1>
@@ -189,6 +238,7 @@
     </footer>
 
     <script src="js/shared.js"></script>
+    <script src="js/contact-actions.js"></script>
     <script src="js/contact-quiz.js"></script>
 </body>
 </html>
